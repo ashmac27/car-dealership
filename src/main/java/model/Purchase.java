@@ -1,16 +1,19 @@
 package model;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Purchase {
     int purchaseId, salespersonId;
+    BigDecimal purchasePrice;
     String vehicleId, purchaseType, phone, email,
             street1, street2, city, state, zip;
     LocalDateTime dateOfPurchase;
 
-    public Purchase(int purchaseId, int salespersonId, String vehicleId, String purchaseType, String phone, String email, String street1, String street2, String city, String state, String zip, LocalDateTime dateOfPurchase) {
+    public Purchase(int purchaseId, int salespersonId, BigDecimal purchasePrice, String vehicleId, String purchaseType, String phone, String email, String street1, String street2, String city, String state, String zip, LocalDateTime dateOfPurchase) {
         this.purchaseId = purchaseId;
         this.salespersonId = salespersonId;
+        this.purchasePrice = purchasePrice;
         this.vehicleId = vehicleId;
         this.purchaseType = purchaseType;
         this.phone = phone;
@@ -21,6 +24,14 @@ public class Purchase {
         this.state = state;
         this.zip = zip;
         this.dateOfPurchase = dateOfPurchase;
+    }
+
+    public BigDecimal getPurchasePrice() {
+        return purchasePrice;
+    }
+
+    public void setPurchasePrice(BigDecimal purchasePrice) {
+        this.purchasePrice = purchasePrice;
     }
 
     public int getPurchaseId() {
