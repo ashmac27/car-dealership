@@ -12,6 +12,9 @@ public class ContactMessage {
         this.email = email;
     }
 
+    public ContactMessage() {
+    }
+
     public int getContactMessageId() {
         return contactMessageId;
     }
