@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.SqlParameterValue;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.stereotype.Repository;
 
@@ -105,15 +106,31 @@ public class PurchaseDAODatabase implements PurchaseDAO {
         // TODO: FINISH THIS
         final String sql = "UPDATE purchase SET "+
                 "SalespersonId = ?, " +
-                "SalespersonId = ?, " +
-                "SalespersonId = ?, " +
-                "SalespersonId = ?, " +
-                "SalespersonId = ?, " +
-                "SalespersonId = ?, " +
-                "SalespersonId = ?, " +
-                "SalespersonId = ?, " + 
+                "VehicleId = ?, " +
+                "PurchaseType = ?, " +
+                "PurchasePrice = ?, " +
+                "Phone = ?, " +
+                "Email = ?, " +
+                "Street1 = ?, " +
+                "Street2 = ?, " + 
+                "City = ?, " + 
+                "State = ?, " + 
+                "Zip = ? " + 
             "WHERE purchaseId=?";
-        return template.update(sql) > 0;
+        return template.update(sql,
+                purchase.getSalespersonId(),
+                purchase.getVehicleId(),
+                purchase.getPurchaseType(),
+                purchase.getPurchasePrice(),
+                (purchase.getPhone()==null) ? new SqlParameterValue(Types.NULL,"Phone") : purchase.getPhone(),
+                (purchase.getEmail()==null) ? new SqlParameterValue(Types.NULL,"Email") : purchase.getEmail(),
+                purchase.getStreet1(),
+                (purchase.getStreet2()==null) ? new SqlParameterValue(Types.NULL,"Street2") : purchase.getStreet2(),
+                purchase.getCity(),
+                purchase.getState(),
+                purchase.getZip(),
+                purchase.getPurchaseId()
+        ) > 0;
     }
 
     @Override
