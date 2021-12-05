@@ -7,8 +7,8 @@ public interface MakeDAO {
 
     List<Make> getAllMakes();
     Make addMake(Make make);
-    String getMakeNameById(int makeId);
+    String getMakeNameById(int id);
     Make getMakeById(int id);
     Make getMakeByName(String name);
-    void deleteMakeById(int makeId);
+    void deleteMakeById(int id);
 }
