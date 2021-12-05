@@ -5,7 +5,7 @@ import model.Vehicle;
 
 import java.util.List;
 
-public interface VehicleDao {
+public interface VehicleDAO {
     // Gets the list of all vehicles
     List<Vehicle> getVehicleList();
 

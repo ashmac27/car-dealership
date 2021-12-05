@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class VehicleDaoFileImpl implements VehicleDao {
+public class VehicleDAODatabase implements VehicleDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemp;
