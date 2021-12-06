@@ -68,12 +68,27 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     }
 
     @Override
+    public Make addMake(Make make) {
+        return makeDAO.addMake(make);
+    }
+
+    @Override
     public List<Model> getModelsList() {
         return modelDAO.getAllModels();
     }
 
     @Override
+    public Model addModel(Model model) {
+        return modelDAO.addModel(model);
+    }
+
+    @Override
     public List<Special> getSpecialsList() {
         return specialDAO.getSpecialList();
+    }
+
+    @Override
+    public Special addSpecial(Special special) {
+        return specialDAO.addSpecial(special);
     }
 }

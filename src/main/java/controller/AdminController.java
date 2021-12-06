@@ -62,15 +62,33 @@ public class AdminController {
         return service.getMakesList();
     }
 
+    // Gets all makes from the system
+    @PostMapping("/makes/add")
+    public Make addMake(@RequestBody Make make) {
+        return service.addMake(make);
+    }
+
     // Gets all models from the system
     @GetMapping("/models")
     public List<Model> getModelsList() {
         return service.getModelsList();
     }
 
+    // Gets all models from the system
+    @PostMapping("/models/add")
+    public Model addModel(@RequestBody Model model) {
+        return service.addModel(model);
+    }
+
     // Gets all specials from the system
     @GetMapping("/specials")
     public List<Special> getSpecialsList() {
         return service.getSpecialsList();
+    }
+
+    // Gets all specials from the system
+    @PostMapping("/specials/add")
+    public Special addSpecial(@RequestBody Special special) {
+        return service.addSpecial(special);
     }
 }

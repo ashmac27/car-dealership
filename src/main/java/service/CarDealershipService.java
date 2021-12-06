@@ -19,7 +19,13 @@ public interface CarDealershipService {
 
     List<Make> getMakesList();
 
+    Make addMake(Make make);
+
     List<Model> getModelsList();
 
+    Model addModel(Model model);
+
     List<Special> getSpecialsList();
+
+    Special addSpecial(Special special);
 }
