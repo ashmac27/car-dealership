@@ -32,6 +32,12 @@ public class AdminController {
         return service.editVehicle(vin, vehicle);
     }
 
+    // Deletes Vehicle given its id
+    @DeleteMapping("/editvehicle/{vin}")
+    public Boolean deleteVehicle(@PathVariable String vin) {
+        return service.deleteVehicle(vin);
+    }
+
     // Gets all users from the system
     @GetMapping("/users")
     public List<User> users() {
@@ -91,4 +97,11 @@ public class AdminController {
     public Special addSpecial(@RequestBody Special special) {
         return service.addSpecial(special);
     }
+
+    // Deletes a special given its id
+    @DeleteMapping("/specials/{specialId}")
+    public Boolean deleteSpecial(@PathVariable int specialId) {
+        return service.deleteSpecial(specialId);
+    }
+
 }

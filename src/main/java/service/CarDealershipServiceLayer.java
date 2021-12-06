@@ -43,6 +43,11 @@ public class CarDealershipServiceLayer implements CarDealershipService {
         return vehicleDAO.editVehicle(vin, vehicle);
     }
 
+    @Override
+    public Boolean deleteVehicle(String vin) {
+        return vehicleDAO.deleteVehicle(vin);
+    }
+
     // Gets a list of all users
     @Override
     public List<User> getListOfUsers() {
@@ -90,5 +95,10 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     @Override
     public Special addSpecial(Special special) {
         return specialDAO.addSpecial(special);
+    }
+
+    @Override
+    public Boolean deleteSpecial(int specialId) {
+        return specialDAO.deleteSpecial(specialId);
     }
 }

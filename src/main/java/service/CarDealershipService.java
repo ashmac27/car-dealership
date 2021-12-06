@@ -11,6 +11,8 @@ public interface CarDealershipService {
 
     Boolean editVehicle(String vin, Vehicle vehicle);
 
+    Boolean deleteVehicle(String vin);
+
     List<User> getListOfUsers();
 
     User addUser(User user);
@@ -28,4 +30,6 @@ public interface CarDealershipService {
     List<Special> getSpecialsList();
 
     Special addSpecial(Special special);
+
+    Boolean deleteSpecial(int specialId);
 }
