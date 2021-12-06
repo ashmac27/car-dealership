@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,6 +35,7 @@ public class SpecialDAODatabase implements SpecialDAO {
     }
 
     @Override
+    @Transactional
     public Special addSpecial(Special special) {
         final String ADD_SPECIAL = "INSERT INTO specials " +
                 "(SpecialId, Title, Description) " +
@@ -45,6 +47,7 @@ public class SpecialDAODatabase implements SpecialDAO {
     }
 
     @Override
+    @Transactional
     public boolean deleteSpecial(int specialId) {
         final String DELETE_SPECIAL = "DELETE FROM specials " +
                 "WHERE SpecialId = ?";

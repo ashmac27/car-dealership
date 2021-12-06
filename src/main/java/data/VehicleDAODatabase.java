@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -56,6 +57,7 @@ public class VehicleDAODatabase implements VehicleDAO {
     }
 
     @Override
+    @Transactional
     public Vehicle addVehicle(Vehicle vehicle) {
         final String ADD_VEHICLE = "INSERT INTO vehicle " +
                 "(MakeId, ModelId, Type, BodyStyle, Year, Transmission, " +
@@ -85,6 +87,7 @@ public class VehicleDAODatabase implements VehicleDAO {
     }
 
     @Override
+    @Transactional
     public boolean deleteVehicle(String VIN) {
         final String DELETE_VEHICLE = "DELETE FROM vehicle " +
                 "WHERE VIN = ?";
@@ -92,6 +95,7 @@ public class VehicleDAODatabase implements VehicleDAO {
     }
 
     @Override
+    @Transactional
     public boolean editVehicle(Vehicle vehicle) {
         final String UPDATE_VEHICLE = "UPDATE vehicle SET " +
                 "MakeId = ? " +
