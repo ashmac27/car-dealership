@@ -1,8 +1,6 @@
 package controller;
 
-import model.SearchCriteria;
-import model.User;
-import model.Vehicle;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import service.CarDealershipService;
@@ -35,7 +33,7 @@ public class AdminController {
     }
 
     // Gets all users from the system
-    @PostMapping("/users")
+    @GetMapping("/users")
     public List<User> users() {
         return service.getListOfUsers();
     }
@@ -56,5 +54,23 @@ public class AdminController {
     @PostMapping("/changepassword")
     public void changePassword() {
         //TODO: There is no password in our database. So, this method might be omitted.
+    }
+
+    // Gets all makes from the system
+    @GetMapping("/makes")
+    public List<Make> getMakesList() {
+        return service.getMakesList();
+    }
+
+    // Gets all models from the system
+    @GetMapping("/models")
+    public List<Model> getModelsList() {
+        return service.getModelsList();
+    }
+
+    // Gets all specials from the system
+    @GetMapping("/specials")
+    public List<Special> getSpecialsList() {
+        return service.getSpecialsList();
     }
 }
