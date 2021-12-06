@@ -96,7 +96,7 @@ public class VehicleDAODatabase implements VehicleDAO {
 
     @Override
     @Transactional
-    public boolean editVehicle(Vehicle vehicle) {
+    public boolean editVehicle(String vin, Vehicle vehicle) {
         final String UPDATE_VEHICLE = "UPDATE vehicle SET " +
                 "MakeId = ? " +
                 "ModelId = ? " +
@@ -131,10 +131,14 @@ public class VehicleDAODatabase implements VehicleDAO {
                 vehicle.isFeatured(),
                 vehicle.isSold(),
                 vehicle.getPicture(),
-                vehicle.getVIN()) > 0;
+                vin) > 0;
     }
 
     private String generateSearchCriteriaCondition(SearchCriteria criteria) {
+
+        if(criteria == null) {
+            return "";
+        }
 
         List<String> listOfConditions = new ArrayList<>();
 
