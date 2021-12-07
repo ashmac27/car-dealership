@@ -146,7 +146,7 @@ public class PurchaseDAODatabase implements PurchaseDAO {
     @Override
     public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate toDate, LocalDate fromDate) {
         String sql = "SELECT CONCAT(user.FirstName, ' ', user.LastName) AS 'User', SUM(purchase.PurchasePrice) AS 'Total Sales', COUNT(VehicleId) AS 'Total Vehicles'" + 
-                " FROM purchase INNER JOIN user ON user.UserId = purchase.SalespersonId WHERE purchase.DateOfPurchase >= ? AND purchase.DateOfPurchase <= ?";
+                " FROM purchase INNER JOIN user ON user.UserId = purchase.SalespersonId WHERE Role='sales' purchase.DateOfPurchase >= ? AND purchase.DateOfPurchase <= ?";
         if(salespersonId==null) {
             sql += " AND SalespersonId <> ?";
             salespersonId = 0; // <> 0 should be every user
@@ -165,7 +165,9 @@ public class PurchaseDAODatabase implements PurchaseDAO {
 
     @Override
     public List<Map<String, Object>> getInventoryReport(boolean used) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        final String sql = "SELECT vehicle.Year, make.MakeName AS Make, model.ModelName AS Model, COUNT(*) AS Count, SUM(vehicle.MSRP) AS 'Stock Value' "+
+                "FROM vehicle INNER JOIN make ON make.MakeId = vehicle.MakeId INNER JOIN model ON model.ModelId = vehicle.ModelId WHERE vehicle.Type = "+(used ? "'used'" : "'new'");
+        return template.query(sql, new ColumnMapRowMapper());
     }
     
     private final class PurchaseMapper implements RowMapper<Purchase> {
