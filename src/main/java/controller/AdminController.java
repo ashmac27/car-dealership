@@ -7,6 +7,9 @@ import service.CarDealershipService;
 
 import java.util.List;
 
+/**
+ * Representing the endpoints for admin-related pages
+ */
 @RestController
 @RequestMapping("/admin")
 public class AdminController {

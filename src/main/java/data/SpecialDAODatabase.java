@@ -11,12 +11,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * Represents the Special DAO implementation
+ */
 @Repository
 public class SpecialDAODatabase implements SpecialDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemp;
 
+    // Gets a special by their id
     @Override
     public Special getSpecialById(int specialId) {
         final String SELECT_SPECIAL = "SELECT * " +
@@ -26,6 +30,7 @@ public class SpecialDAODatabase implements SpecialDAO {
         return special;
     }
 
+    // Gets the list of all specials
     @Override
     public List<Special> getSpecialList() {
         final String SELECT_LIST_OF_SPECIAL = "SELECT * " +
@@ -34,6 +39,7 @@ public class SpecialDAODatabase implements SpecialDAO {
         return specialList;
     }
 
+    // Adds a special to the database and return that special
     @Override
     @Transactional
     public Special addSpecial(Special special) {
@@ -46,6 +52,7 @@ public class SpecialDAODatabase implements SpecialDAO {
         return special;
     }
 
+    // Deletes a special, and return true if delete is successful
     @Override
     @Transactional
     public boolean deleteSpecial(int specialId) {
@@ -54,6 +61,7 @@ public class SpecialDAODatabase implements SpecialDAO {
         return jdbcTemp.update(DELETE_SPECIAL, specialId) > 0;
     }
 
+    // Represents the mapper for special entities
     public static final class SpecialMapper implements RowMapper<Special> {
 
         @Override

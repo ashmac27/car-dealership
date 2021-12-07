@@ -13,12 +13,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the Vehicle DAO implementation
+ */
 @Repository
 public class VehicleDAODatabase implements VehicleDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemp;
 
+    // Gets the list of all vehicles in the system
     @Override
     public List<Vehicle> getVehicleList() {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
@@ -27,6 +31,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicleList;
     }
 
+    // Gets the list of all featured vehicle in the system
     @Override
     public List<Vehicle> getFeaturedVehicleList() {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
@@ -36,6 +41,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicleList;
     }
 
+    // Gets a list of vehicle given the search criteria
     @Override
     public List<Vehicle> getVehicleListBySearchCriteria(SearchCriteria criteria) {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
@@ -47,6 +53,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicleList;
     }
 
+    // Gets a vehicle by their Id (VIN)
     @Override
     public Vehicle getVehicleById(String VIN) {
         final String SELECT_VEHICLE = "SELECT * " +
@@ -56,16 +63,18 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicle;
     }
 
+    // Adds that vehicle to the system and return that vehicle
     @Override
     @Transactional
     public Vehicle addVehicle(Vehicle vehicle) {
         final String ADD_VEHICLE = "INSERT INTO vehicle " +
-                "(MakeId, ModelId, Type, BodyStyle, Year, Transmission, " +
-                "Color, Interior, Mileage, SalePrice, MSRP, Description, " +
+                "(VIN, MakeId, ModelId, `Type`, BodyStyle, `Year`, Transmission, " +
+                "Color, Interior, Mileage, SalePrice, MSRP, `Description`, " +
                 "IsFeature, IsSold, Picture) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemp.update(ADD_VEHICLE,
+                vehicle.getVIN(),
                 vehicle.getMakeId(),
                 vehicle.getModelId(),
                 vehicle.getType(),
@@ -81,11 +90,10 @@ public class VehicleDAODatabase implements VehicleDAO {
                 vehicle.isFeatured(),
                 vehicle.isSold(),
                 vehicle.getPicture());
-        String newVIN = jdbcTemp.queryForObject("SELECT LAST_INSERT_ID()", String.class);
-        vehicle.setVIN(newVIN);
         return vehicle;
     }
 
+    // Deletes a vehicle from the system, and return true if delete is successful
     @Override
     @Transactional
     public boolean deleteVehicle(String VIN) {
@@ -94,22 +102,23 @@ public class VehicleDAODatabase implements VehicleDAO {
         return jdbcTemp.update(DELETE_VEHICLE, VIN) > 0;
     }
 
+    // Deletes vehicle from the system, and return true if the edit is successful
     @Override
     @Transactional
     public boolean editVehicle(String vin, Vehicle vehicle) {
         final String UPDATE_VEHICLE = "UPDATE vehicle SET " +
                 "MakeId = ? " +
                 "ModelId = ? " +
-                "Type = ? " +
+                "`Type` = ? " +
                 "BodyStyle = ? " +
-                "Year = ? " +
+                "`Year` = ? " +
                 "Transmission = ? " +
                 "Color = ? " +
                 "Interior = ? " +
                 "Mileage = ? " +
                 "SalePrice = ? " +
                 "MSRP = ? " +
-                "Description = ? " +
+                "`Description` = ? " +
                 "IsFeature = ? " +
                 "IsSold = ? " +
                 "Picture = ? " +
@@ -134,6 +143,7 @@ public class VehicleDAODatabase implements VehicleDAO {
                 vin) > 0;
     }
 
+    // Generate the Search Criteria condition query, and return the string for that query
     private String generateSearchCriteriaCondition(SearchCriteria criteria) {
 
         if(criteria == null) {
@@ -155,13 +165,13 @@ public class VehicleDAODatabase implements VehicleDAO {
             listOfConditions.add("ma.Model LIKE %" + criteria.getMake() + "%");
         }
         if (criteria.getYear() != null) {
-            listOfConditions.add("v.Year = " + criteria.getYear().toString());
+            listOfConditions.add("v.`Year` = " + criteria.getYear().toString());
         }
         if (criteria.getMinYear() != null) {
-            listOfConditions.add("v.Year >= " + criteria.getMinYear().toString());
+            listOfConditions.add("v.`Year` >= " + criteria.getMinYear().toString());
         }
         if (criteria.getMaxYear() != null) {
-            listOfConditions.add("v.Year <= " + criteria.getMaxYear().toString());
+            listOfConditions.add("v.`Year` <= " + criteria.getMaxYear().toString());
         }
         if (criteria.getMinPrice() != null) {
             listOfConditions.add("v.SalePrice >= " + criteria.getMinPrice().toString());
@@ -181,6 +191,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return conditionQuery;
     }
 
+    // Represents the mapper for vehicles entities
     public final static class VehicleMapper implements RowMapper<Vehicle> {
 
         @Override

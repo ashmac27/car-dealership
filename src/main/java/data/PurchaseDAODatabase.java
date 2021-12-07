@@ -36,8 +36,8 @@ public class PurchaseDAODatabase implements PurchaseDAO {
 
     @Override
     public Purchase add(Purchase purchase) {
-        final String sql = "INTSERT INTO purchase(SalespersonId, PurchasePrice, VehicleId, PurchaseType, Phone, Email, Street1, Street2, City, State, Zip, DateOfPurchase)"
-                + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
+        final String sql = "INTSERT INTO purchase(SalespersonId, PurchasePrice, VIN, PurchaseType, Name, Phone, Email, Street1, Street2, City, State, Zip)"
+                + " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
         
         template.update((Connection conn) -> {
@@ -46,32 +46,32 @@ public class PurchaseDAODatabase implements PurchaseDAO {
             // Default value generated is PurchaseId
             statement.setInt(1, purchase.getSalespersonId());
             statement.setBigDecimal(2, purchase.getPurchasePrice());
-            statement.setString(3, purchase.getVehicleId());
+            statement.setString(3, purchase.getVIN());
             statement.setString(4, purchase.getPurchaseType());
-            statement.setString(7, purchase.getStreet1());
-            statement.setString(9, purchase.getCity());
-            statement.setString(10, purchase.getState());
-            statement.setTimestamp(11, Timestamp.valueOf(LocalDateTime.now()));
+            statement.setString(5, purchase.getName());
+            statement.setString(8, purchase.getStreet1());
+            statement.setString(10, purchase.getCity());
+            statement.setString(11, purchase.getState());
             
             // Sets phone value, if null or not
             if(purchase.getPhone()!=null) {
-                statement.setString(5, purchase.getPhone());
-            } else {
-                statement.setNull(5, Types.NULL);
-            }
-            
-            // Sets email value, if null or not
-            if(purchase.getEmail()!=null) {
-                statement.setString(6, purchase.getEmail());
+                statement.setString(6, purchase.getPhone());
             } else {
                 statement.setNull(6, Types.NULL);
             }
             
+            // Sets email value, if null or not
+            if(purchase.getEmail()!=null) {
+                statement.setString(7, purchase.getEmail());
+            } else {
+                statement.setNull(7, Types.NULL);
+            }
+            
             // Sets street2 value, if null or not
             if(purchase.getStreet2()!=null) {
-                statement.setString(8, purchase.getStreet2());
+                statement.setString(9, purchase.getStreet2());
             } else {
-                statement.setNull(8, Types.NULL);
+                statement.setNull(9, Types.NULL);
             }
             
             return statement;
@@ -95,7 +95,7 @@ public class PurchaseDAODatabase implements PurchaseDAO {
 
     @Override
     public Purchase getPurchaseByVehicleId(String vehicleId) {
-        final String sql = "SELECT * FROM purchase WHERE VehicleId = ?";
+        final String sql = "SELECT * FROM purchase WHERE VIN = ?";
         return template.queryForObject(sql, new PurchaseMapper(), vehicleId);
     }
 
@@ -110,9 +110,10 @@ public class PurchaseDAODatabase implements PurchaseDAO {
         // TODO: FINISH THIS
         final String sql = "UPDATE purchase SET "+
                 "SalespersonId = ?, " +
-                "VehicleId = ?, " +
+                "VIN = ?, " +
                 "PurchaseType = ?, " +
                 "PurchasePrice = ?, " +
+                "Name = ?, " +
                 "Phone = ?, " +
                 "Email = ?, " +
                 "Street1 = ?, " +
@@ -123,9 +124,10 @@ public class PurchaseDAODatabase implements PurchaseDAO {
             "WHERE purchaseId=?";
         return template.update(sql,
                 purchase.getSalespersonId(),
-                purchase.getVehicleId(),
+                purchase.getVIN(),
                 purchase.getPurchaseType(),
                 purchase.getPurchasePrice(),
+                purchase.getName(),
                 (purchase.getPhone()==null) ? new SqlParameterValue(Types.NULL,"Phone") : purchase.getPhone(),
                 (purchase.getEmail()==null) ? new SqlParameterValue(Types.NULL,"Email") : purchase.getEmail(),
                 purchase.getStreet1(),
@@ -181,6 +183,7 @@ public class PurchaseDAODatabase implements PurchaseDAO {
                     rs.getBigDecimal("PurchasePrice").setScale(2),
                     rs.getString("VehicleId"),
                     rs.getString("PurchaseType"),
+                    rs.getString("Name"),
                     null, // Phone can be null
                     null, // Email can be null
                     rs.getString("Street1"),

@@ -6,16 +6,17 @@ import java.time.LocalDateTime;
 public class Purchase {
     int purchaseId, salespersonId;
     BigDecimal purchasePrice;
-    String vehicleId, purchaseType, phone, email,
+    String VIN, purchaseType, name, phone, email,
             street1, street2, city, state, zip;
     LocalDateTime dateOfPurchase;
 
-    public Purchase(int purchaseId, int salespersonId, BigDecimal purchasePrice, String vehicleId, String purchaseType, String phone, String email, String street1, String street2, String city, String state, String zip, LocalDateTime dateOfPurchase) {
+    public Purchase(int purchaseId, int salespersonId, BigDecimal purchasePrice, String VIN, String purchaseType, String name, String phone, String email, String street1, String street2, String city, String state, String zip, LocalDateTime dateOfPurchase) {
         this.purchaseId = purchaseId;
         this.salespersonId = salespersonId;
         this.purchasePrice = purchasePrice;
-        this.vehicleId = vehicleId;
+        this.VIN = VIN;
         this.purchaseType = purchaseType;
+        this.name = name;
         this.phone = phone;
         this.email = email;
         this.street1 = street1;
@@ -28,10 +29,6 @@ public class Purchase {
 
     public BigDecimal getPurchasePrice() {
         return purchasePrice;
-    }
-
-    public void setPurchasePrice(BigDecimal purchasePrice) {
-        this.purchasePrice = purchasePrice;
     }
 
     public int getPurchaseId() {
@@ -50,12 +47,12 @@ public class Purchase {
         this.salespersonId = salespersonId;
     }
 
-    public String getVehicleId() {
-        return vehicleId;
+    public String getVIN() {
+        return VIN;
     }
 
-    public void setVehicleId(String vehicleId) {
-        this.vehicleId = vehicleId;
+    public void setVIN(String VIN) {
+        this.VIN = VIN;
     }
 
     public String getPurchaseType() {
@@ -64,6 +61,14 @@ public class Purchase {
 
     public void setPurchaseType(String purchaseType) {
         this.purchaseType = purchaseType;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPhone() {
