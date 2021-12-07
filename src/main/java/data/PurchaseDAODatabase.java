@@ -166,7 +166,8 @@ public class PurchaseDAODatabase implements PurchaseDAO {
     @Override
     public List<Map<String, Object>> getInventoryReport(boolean used) {
         final String sql = "SELECT vehicle.Year, make.MakeName AS Make, model.ModelName AS Model, COUNT(*) AS Count, SUM(vehicle.MSRP) AS 'Stock Value' "+
-                "FROM vehicle INNER JOIN make ON make.MakeId = vehicle.MakeId INNER JOIN model ON model.ModelId = vehicle.ModelId WHERE vehicle.Type = "+(used ? "'used'" : "'new'");
+                "FROM vehicle INNER JOIN make ON make.MakeId = vehicle.MakeId INNER JOIN model ON model.ModelId = vehicle.ModelId WHERE "+
+                "vehicle.IsSold=0 AND vehicle.Type = "+(used ? "'used'" : "'new'")+" GROUP BY vehicle.MakeId, vehicle.ModelId, vehicle.Year";
         return template.query(sql, new ColumnMapRowMapper());
     }
     
