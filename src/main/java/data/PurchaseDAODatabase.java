@@ -8,11 +8,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.sql.Types;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.Map;
 import model.Purchase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
+import org.springframework.jdbc.core.ColumnMapRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.SqlParameterValue;
@@ -137,6 +141,31 @@ public class PurchaseDAODatabase implements PurchaseDAO {
     public boolean deleteByPurchaseId(int purchaseId) {
         final String sql = "DELETE FROM purchase WHERE PurchaseId=?;";
         return template.update(sql, purchaseId) > 0;
+    }
+
+    @Override
+    public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate toDate, LocalDate fromDate) {
+        String sql = "SELECT CONCAT(user.FirstName, ' ', user.LastName) AS 'User', SUM(purchase.PurchasePrice) AS 'Total Sales', COUNT(VehicleId) AS 'Total Vehicles'" + 
+                " FROM purchase INNER JOIN user ON user.UserId = purchase.SalespersonId WHERE purchase.DateOfPurchase >= ? AND purchase.DateOfPurchase <= ?";
+        if(salespersonId==null) {
+            sql += " AND SalespersonId <> ?";
+            salespersonId = 0; // <> 0 should be every user
+        } else {
+            sql += " AND SalespersonId = ?";
+        }
+        sql += "GROUP BY purchase.SalespersonId ORDER BY User ASC";
+        if(toDate==null) toDate = LocalDate.now();
+        if(fromDate==null) fromDate = LocalDate.MIN;
+        return template.query(sql, new ColumnMapRowMapper(),
+                Timestamp.valueOf(LocalDateTime.of(fromDate, LocalTime.MIN)), // earliest possible date if not specified
+                Timestamp.valueOf(LocalDateTime.of(toDate, LocalTime.MAX)), // Maximum time of today if not specified
+                salespersonId
+        ); // Custom mapper for report, a model that is only selected once
+    }
+
+    @Override
+    public List<Map<String, Object>> getInventoryReport(boolean used) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     private final class PurchaseMapper implements RowMapper<Purchase> {

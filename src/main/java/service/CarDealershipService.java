@@ -1,8 +1,10 @@
 package service;
 
+import java.time.LocalDate;
 import model.*;
 
 import java.util.List;
+import java.util.Map;
 
 public interface CarDealershipService {
     List<Vehicle> getListOfVehiclesByCriteria(SearchCriteria criteria);
@@ -32,4 +34,19 @@ public interface CarDealershipService {
     Special addSpecial(Special special);
 
     Boolean deleteSpecial(int specialId);
+    
+    /**
+     * Gets sales reports, optional parameters provided
+     * @param salespersonId ID of salesperson. Can be null
+     * @param fromDate Beginning range for date. Can be null
+     * @param toDate Ending range for date. Can be null
+     * @return List of salespeople and their 
+     */
+    public List<Map<String,Object>> getSalesReport(Integer salespersonId, LocalDate fromDate, LocalDate toDate);
+    
+    /**
+     * Gets inventory report. This returns the sum of cars by model and year that have been sold, and for how much
+     * @return inventory report
+     */
+    public List<Map<String,Object>> getInventoryReport();
 }

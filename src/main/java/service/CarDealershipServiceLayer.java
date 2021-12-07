@@ -1,11 +1,13 @@
 package service;
 
 import data.*;
+import java.time.LocalDate;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarDealershipServiceLayer implements CarDealershipService {
@@ -24,6 +26,9 @@ public class CarDealershipServiceLayer implements CarDealershipService {
 
     @Autowired
     private SpecialDAO specialDAO;
+    
+    @Autowired
+    private PurchaseDAO purchaseDAO;
 
     // Gets a list of vehicles given a search criteria
     @Override
@@ -100,5 +105,16 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     @Override
     public Boolean deleteSpecial(int specialId) {
         return specialDAO.deleteSpecial(specialId);
+    }
+
+    @Override
+    public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate fromDate, LocalDate toDate) {
+        if(!fromDate.isBefore(toDate)) throw new IllegalArgumentException("toDate must be after forDate");
+        return purchaseDAO.getSalesReport(salespersonId, toDate, fromDate);
+    }
+
+    @Override
+    public List<Map<String, Object>> getInventoryReport() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

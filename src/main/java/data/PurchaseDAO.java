@@ -1,6 +1,8 @@
 package data;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 import model.Purchase;
 
 public interface PurchaseDAO {
@@ -52,4 +54,20 @@ public interface PurchaseDAO {
      * @return True if found and deleted
      */
     public boolean deleteByPurchaseId(int purchaseId);
+    
+    /**
+     * Gets sales report for all or specified users and dates
+     * @param salespersonId Specified user
+     * @param toDate End of date range
+     * @param fromDate Beginning of date range
+     * @return Sales report
+     */
+    public List<Map<String,Object>> getSalesReport(Integer salespersonId, LocalDate toDate, LocalDate fromDate);
+    
+    /**
+     * Gets an inventory sales report, grouped by make
+     * @param used Gets used vehicles sold if true, new if false
+     * @return Inventory Report
+     */
+    public List<Map<String,Object>> getInventoryReport(boolean used);
 }
