@@ -17,17 +17,17 @@ public class InventoryController {
     private CarDealershipService service;
 
     @PostMapping("/new")
-    public List<Vehicle> getNewVehicles (@RequestBody SearchCriteria criteria){
+    public List<Vehicle> newVehicles (@RequestBody SearchCriteria criteria){
         return service.getListOfVehiclesByCriteria(criteria).stream().filter(x-> x.getMileage() == 0).collect(Collectors.toList());
     }
 
     @PostMapping("/used")
-    public List<Vehicle> getUsedVehicles(@RequestBody SearchCriteria criteria){
+    public List<Vehicle> usedVehicles(@RequestBody SearchCriteria criteria){
         return service.getListOfVehiclesByCriteria(criteria).stream().filter(x-> x.getMileage() > 0).collect(Collectors.toList());
     }
 
-    @PostMapping("/details/{vin}")
-    public Vehicle getVehicleDetails(@PathVariable String vin){
-        return service.getVehicleByVin(vin);
+    @GetMapping("/details/{VIN}")
+    public Vehicle getVehicleDetails(@PathVariable String VIN){
+        return service.getVehicleByVin(VIN);
     }
 }
