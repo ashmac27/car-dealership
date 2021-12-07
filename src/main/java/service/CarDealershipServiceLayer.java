@@ -2,6 +2,7 @@ package service;
 
 import data.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -127,8 +128,7 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     }
 
     @Override
-    public List<Map<String, Object>> getInventoryReport() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-
+    public List<Map<String, Object>> getInventoryReport(boolean used) {
+        return purchaseDAO.getInventoryReport(used);
     }
 }

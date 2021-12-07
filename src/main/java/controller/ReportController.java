@@ -1,6 +1,7 @@
 package controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,7 +26,10 @@ public class ReportController {
     }
     
     @GetMapping("/inventory")
-    public List<Map<String,Object>> inventoryReport() {
-        return service.getInventoryReport();
+    public Map<String,List<Map<String,Object>>> inventoryReport() {
+        Map<String,List<Map<String,Object>>> report = new HashMap<String,List<Map<String,Object>>>();
+        report.put("New", service.getInventoryReport(false));
+        report.put("Used", service.getInventoryReport(true));
+        return report;
     }
 }

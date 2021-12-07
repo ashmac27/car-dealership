@@ -53,5 +53,5 @@ public interface CarDealershipService {
      * Gets inventory report. This returns the sum of cars by model and year that have been sold, and for how much
      * @return inventory report
      */
-    public List<Map<String,Object>> getInventoryReport();
+    public List<Map<String,Object>> getInventoryReport(boolean used);
 }
