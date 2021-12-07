@@ -68,12 +68,13 @@ public class VehicleDAODatabase implements VehicleDAO {
     @Transactional
     public Vehicle addVehicle(Vehicle vehicle) {
         final String ADD_VEHICLE = "INSERT INTO vehicle " +
-                "(MakeId, ModelId, Type, BodyStyle, Year, Transmission, " +
+                "(VIN, MakeId, ModelId, Type, BodyStyle, Year, Transmission, " +
                 "Color, Interior, Mileage, SalePrice, MSRP, Description, " +
                 "IsFeature, IsSold, Picture) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemp.update(ADD_VEHICLE,
+                vehicle.getVIN(),
                 vehicle.getMakeId(),
                 vehicle.getModelId(),
                 vehicle.getType(),
@@ -89,8 +90,6 @@ public class VehicleDAODatabase implements VehicleDAO {
                 vehicle.isFeatured(),
                 vehicle.isSold(),
                 vehicle.getPicture());
-        String newVIN = jdbcTemp.queryForObject("SELECT LAST_INSERT_ID()", String.class);
-        vehicle.setVIN(newVIN);
         return vehicle;
     }
 
