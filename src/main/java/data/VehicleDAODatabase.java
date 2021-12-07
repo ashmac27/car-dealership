@@ -13,12 +13,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents the Vehicle DAO implementation
+ */
 @Repository
 public class VehicleDAODatabase implements VehicleDAO {
 
     @Autowired
     private JdbcTemplate jdbcTemp;
 
+    // Gets the list of all vehicles in the system
     @Override
     public List<Vehicle> getVehicleList() {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
@@ -27,6 +31,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicleList;
     }
 
+    // Gets the list of all featured vehicle in the system
     @Override
     public List<Vehicle> getFeaturedVehicleList() {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
@@ -36,6 +41,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicleList;
     }
 
+    // Gets a list of vehicle given the search criteria
     @Override
     public List<Vehicle> getVehicleListBySearchCriteria(SearchCriteria criteria) {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
@@ -47,6 +53,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicleList;
     }
 
+    // Gets a vehicle by their Id (VIN)
     @Override
     public Vehicle getVehicleById(String VIN) {
         final String SELECT_VEHICLE = "SELECT * " +
@@ -56,6 +63,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicle;
     }
 
+    // Adds that vehicle to the system and return that vehicle
     @Override
     @Transactional
     public Vehicle addVehicle(Vehicle vehicle) {
@@ -86,6 +94,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return vehicle;
     }
 
+    // Deletes a vehicle from the system, and return true if delete is successful
     @Override
     @Transactional
     public boolean deleteVehicle(String VIN) {
@@ -94,6 +103,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return jdbcTemp.update(DELETE_VEHICLE, VIN) > 0;
     }
 
+    // Deletes vehicle from the system, and return true if the edit is successful
     @Override
     @Transactional
     public boolean editVehicle(String vin, Vehicle vehicle) {
@@ -134,6 +144,7 @@ public class VehicleDAODatabase implements VehicleDAO {
                 vin) > 0;
     }
 
+    // Generate the Search Criteria condition query, and return the string for that query
     private String generateSearchCriteriaCondition(SearchCriteria criteria) {
 
         if(criteria == null) {
@@ -181,6 +192,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         return conditionQuery;
     }
 
+    // Represents the mapper for vehicles entities
     public final static class VehicleMapper implements RowMapper<Vehicle> {
 
         @Override

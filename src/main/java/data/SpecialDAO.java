@@ -4,6 +4,9 @@ import model.Special;
 
 import java.util.List;
 
+/**
+ * Represents the Special DAO functionality of the system
+ */
 public interface SpecialDAO {
 
     // Gets special by id

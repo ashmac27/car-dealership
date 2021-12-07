@@ -5,6 +5,9 @@ import model.Vehicle;
 
 import java.util.List;
 
+/**
+ * Represents the Vehicle DAO functionality of the system
+ */
 public interface VehicleDAO {
     // Gets the list of all vehicles
     List<Vehicle> getVehicleList();
