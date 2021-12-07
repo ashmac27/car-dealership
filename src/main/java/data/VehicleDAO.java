@@ -25,5 +25,5 @@ public interface VehicleDAO {
     boolean deleteVehicle(String VIN);
 
     // Edit Vehicle and return back that vehicle if the query is successful
-    boolean editVehicle(Vehicle vehicle);
+    boolean editVehicle(String vin, Vehicle vehicle);
 }

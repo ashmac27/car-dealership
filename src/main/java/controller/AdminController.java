@@ -1,8 +1,6 @@
 package controller;
 
-import model.SearchCriteria;
-import model.User;
-import model.Vehicle;
+import model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import service.CarDealershipService;
@@ -34,8 +32,14 @@ public class AdminController {
         return service.editVehicle(vin, vehicle);
     }
 
+    // Deletes Vehicle given its id
+    @DeleteMapping("/editvehicle/{vin}")
+    public Boolean deleteVehicle(@PathVariable String vin) {
+        return service.deleteVehicle(vin);
+    }
+
     // Gets all users from the system
-    @PostMapping("/users")
+    @GetMapping("/users")
     public List<User> users() {
         return service.getListOfUsers();
     }
@@ -57,4 +61,47 @@ public class AdminController {
     public void changePassword() {
         //TODO: There is no password in our database. So, this method might be omitted.
     }
+
+    // Gets all makes from the system
+    @GetMapping("/makes")
+    public List<Make> getMakesList() {
+        return service.getMakesList();
+    }
+
+    // Gets all makes from the system
+    @PostMapping("/makes/add")
+    public Make addMake(@RequestBody Make make) {
+        return service.addMake(make);
+    }
+
+    // Gets all models from the system
+    @GetMapping("/models")
+    public List<Model> getModelsList() {
+        return service.getModelsList();
+    }
+
+    // Gets all models from the system
+    @PostMapping("/models/add")
+    public Model addModel(@RequestBody Model model) {
+        return service.addModel(model);
+    }
+
+    // Gets all specials from the system
+    @GetMapping("/specials")
+    public List<Special> getSpecialsList() {
+        return service.getSpecialsList();
+    }
+
+    // Gets all specials from the system
+    @PostMapping("/specials/add")
+    public Special addSpecial(@RequestBody Special special) {
+        return service.addSpecial(special);
+    }
+
+    // Deletes a special given its id
+    @DeleteMapping("/specials/{specialId}")
+    public Boolean deleteSpecial(@PathVariable int specialId) {
+        return service.deleteSpecial(specialId);
+    }
+
 }
