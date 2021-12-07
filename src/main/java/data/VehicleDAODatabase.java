@@ -68,10 +68,10 @@ public class VehicleDAODatabase implements VehicleDAO {
     @Transactional
     public Vehicle addVehicle(Vehicle vehicle) {
         final String ADD_VEHICLE = "INSERT INTO vehicle " +
-                "(VIN, MakeId, ModelId, Type, BodyStyle, Year, Transmission, " +
-                "Color, Interior, Mileage, SalePrice, MSRP, Description, " +
+                "(VIN, MakeId, ModelId, `Type`, BodyStyle, `Year`, Transmission, " +
+                "Color, Interior, Mileage, SalePrice, MSRP, `Description`, " +
                 "IsFeature, IsSold, Picture) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemp.update(ADD_VEHICLE,
                 vehicle.getVIN(),
@@ -109,16 +109,16 @@ public class VehicleDAODatabase implements VehicleDAO {
         final String UPDATE_VEHICLE = "UPDATE vehicle SET " +
                 "MakeId = ? " +
                 "ModelId = ? " +
-                "Type = ? " +
+                "`Type` = ? " +
                 "BodyStyle = ? " +
-                "Year = ? " +
+                "`Year` = ? " +
                 "Transmission = ? " +
                 "Color = ? " +
                 "Interior = ? " +
                 "Mileage = ? " +
                 "SalePrice = ? " +
                 "MSRP = ? " +
-                "Description = ? " +
+                "`Description` = ? " +
                 "IsFeature = ? " +
                 "IsSold = ? " +
                 "Picture = ? " +
@@ -165,13 +165,13 @@ public class VehicleDAODatabase implements VehicleDAO {
             listOfConditions.add("ma.Model LIKE %" + criteria.getMake() + "%");
         }
         if (criteria.getYear() != null) {
-            listOfConditions.add("v.Year = " + criteria.getYear().toString());
+            listOfConditions.add("v.`Year` = " + criteria.getYear().toString());
         }
         if (criteria.getMinYear() != null) {
-            listOfConditions.add("v.Year >= " + criteria.getMinYear().toString());
+            listOfConditions.add("v.`Year` >= " + criteria.getMinYear().toString());
         }
         if (criteria.getMaxYear() != null) {
-            listOfConditions.add("v.Year <= " + criteria.getMaxYear().toString());
+            listOfConditions.add("v.`Year` <= " + criteria.getMaxYear().toString());
         }
         if (criteria.getMinPrice() != null) {
             listOfConditions.add("v.SalePrice >= " + criteria.getMinPrice().toString());
