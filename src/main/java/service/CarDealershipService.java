@@ -37,4 +37,6 @@ public interface CarDealershipService {
     Boolean deleteSpecial(int specialId);
 
     ContactMessage postContactMessage(ContactMessage contactMessage);
+
+    Vehicle getVehicleByVin(String vin);
 }

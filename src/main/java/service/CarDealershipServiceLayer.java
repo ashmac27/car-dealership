@@ -114,4 +114,9 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     public ContactMessage postContactMessage(ContactMessage contactMessage) {
         return contactDAO.add(contactMessage);
     }
+
+    @Override
+    public Vehicle getVehicleByVin(String vin){
+        return vehicleDAO.getVehicleById(vin);
+    }
 }
