@@ -25,6 +25,14 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     @Autowired
     private SpecialDAO specialDAO;
 
+    @Autowired
+    private ContactMessageDAO contactDAO;
+
+    @Override
+    public List<Vehicle> getListOfFeaturedVehicles() {
+        return vehicleDAO.getFeaturedVehicleList();
+    }
+
     // Gets a list of vehicles given a search criteria
     @Override
     public List<Vehicle> getListOfVehiclesByCriteria(SearchCriteria criteria) {
@@ -100,5 +108,10 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     @Override
     public Boolean deleteSpecial(int specialId) {
         return specialDAO.deleteSpecial(specialId);
+    }
+
+    @Override
+    public ContactMessage postContactMessage(ContactMessage contactMessage) {
+        return contactDAO.add(contactMessage);
     }
 }
