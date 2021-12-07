@@ -56,4 +56,10 @@ public interface CarDealershipService {
 
     // Adds/post a contact message to the system
     ContactMessage postContactMessage(ContactMessage contactMessage);
+
+    // Gets a single vehicle by its VIN
+    Vehicle getVehicleByVin(String VIN);
+
+    // Adds/post a new purchase
+    Purchase postAddPurchase(Purchase purchase);
 }
