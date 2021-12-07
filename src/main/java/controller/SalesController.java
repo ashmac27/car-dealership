@@ -28,7 +28,7 @@ public class SalesController {
 
     @PostMapping("/purchase/{VIN}")
     public Purchase postPurchase(@PathVariable String VIN, @RequestBody Purchase purchase){
-        purchase.setVehicleId(VIN);
+        purchase.setVIN(VIN);
         return service.postAddPurchase(purchase);
     }
 }
