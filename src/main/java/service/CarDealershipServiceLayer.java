@@ -30,6 +30,14 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     @Autowired
     private PurchaseDAO purchaseDAO;
 
+    @Autowired
+    private ContactMessageDAO contactDAO;
+
+    @Override
+    public List<Vehicle> getListOfFeaturedVehicles() {
+        return vehicleDAO.getFeaturedVehicleList();
+    }
+
     // Gets a list of vehicles given a search criteria
     @Override
     public List<Vehicle> getListOfVehiclesByCriteria(SearchCriteria criteria) {
@@ -108,6 +116,11 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     }
 
     @Override
+    public ContactMessage postContactMessage(ContactMessage contactMessage) {
+        return contactDAO.add(contactMessage);
+    }
+    
+    @Override
     public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate fromDate, LocalDate toDate) {
         if(!fromDate.isBefore(toDate)) throw new IllegalArgumentException("toDate must be after forDate");
         return purchaseDAO.getSalesReport(salespersonId, toDate, fromDate);
@@ -116,5 +129,6 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     @Override
     public List<Map<String, Object>> getInventoryReport() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 }

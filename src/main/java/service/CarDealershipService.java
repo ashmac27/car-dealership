@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 
 public interface CarDealershipService {
+
+    List<Vehicle> getListOfFeaturedVehicles();
+
     List<Vehicle> getListOfVehiclesByCriteria(SearchCriteria criteria);
 
     Vehicle addVehicle(Vehicle vehicle);
@@ -34,6 +37,8 @@ public interface CarDealershipService {
     Special addSpecial(Special special);
 
     Boolean deleteSpecial(int specialId);
+
+    ContactMessage postContactMessage(ContactMessage contactMessage);
     
     /**
      * Gets sales reports, optional parameters provided
