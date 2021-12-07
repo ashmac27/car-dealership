@@ -28,6 +28,9 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     @Autowired
     private ContactMessageDAO contactDAO;
 
+    @Autowired
+    private PurchaseDAO purchaseDAO;
+
     @Override
     public List<Vehicle> getListOfFeaturedVehicles() {
         return vehicleDAO.getFeaturedVehicleList();
@@ -116,7 +119,14 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     }
 
     @Override
-    public Vehicle getVehicleByVin(String vin){
-        return vehicleDAO.getVehicleById(vin);
+    public Vehicle getVehicleByVin(String VIN){
+        return vehicleDAO.getVehicleById(VIN);
     }
+
+    @Override
+    public Purchase postAddPurchase(Purchase purchase){
+        return purchaseDAO.add(purchase);
+    }
+
+
 }

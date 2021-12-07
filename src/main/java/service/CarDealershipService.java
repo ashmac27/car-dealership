@@ -38,5 +38,8 @@ public interface CarDealershipService {
 
     ContactMessage postContactMessage(ContactMessage contactMessage);
 
-    Vehicle getVehicleByVin(String vin);
+    Vehicle getVehicleByVin(String VIN);
+
+    Purchase postAddPurchase(Purchase purchase);
+
 }
