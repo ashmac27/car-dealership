@@ -70,7 +70,7 @@ public class VehicleDAODatabase implements VehicleDAO {
         final String ADD_VEHICLE = "INSERT INTO vehicle " +
                 "(VIN, MakeId, ModelId, `Type`, BodyStyle, `Year`, Transmission, " +
                 "Color, Interior, Mileage, SalePrice, MSRP, `Description`, " +
-                "IsFeature, IsSold, Picture) " +
+                "IsFeatured, IsSold, Picture) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         jdbcTemp.update(ADD_VEHICLE,
