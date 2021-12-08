@@ -15,6 +15,8 @@ public class User {
         this.email = email;
         this.role = role;
     }
+    public User(){
+    }
 
     public int getUserId() {
         return userId;
