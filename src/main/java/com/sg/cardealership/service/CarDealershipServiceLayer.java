@@ -81,8 +81,7 @@ public class CarDealershipServiceLayer implements CarDealershipService {
     // Edits a user from the system
     @Override
     public Boolean editUser(User user) {
-        //TODO: Might need to change up the method
-        return userDAO.editUser(user) != null;
+        return userDAO.editUser(user);
     }
 
     // Gets a list of all makes

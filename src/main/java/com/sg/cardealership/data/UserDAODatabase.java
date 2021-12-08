@@ -33,17 +33,17 @@ public class UserDAODatabase implements UserDAO{
 
     @Override
     @Transactional
-    public User editUser(User user) {
+    public Boolean editUser(User user) {
         final String EDIT_USER = "UPDATE user SET FirstName = ?, LastName = ?, Email = ?, Role = ? WHERE UserId = ?;";
 
-        jdbc.update(EDIT_USER,
+        int rowAffected = jdbc.update(EDIT_USER,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail(),
                 user.getRole(),
                 user.getUserId());
 
-        return user;
+        return (rowAffected > 0);
     }
 
     @Override
