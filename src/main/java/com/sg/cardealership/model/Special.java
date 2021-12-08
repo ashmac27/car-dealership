@@ -1,5 +1,7 @@
 package com.sg.cardealership.model;
 
+import java.util.Objects;
+
 public class Special {
 
     private int specialId;
@@ -28,5 +30,18 @@ public class Special {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Special special = (Special) o;
+        return specialId == special.specialId && Objects.equals(title, special.title) && Objects.equals(description, special.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(specialId, title, description);
     }
 }

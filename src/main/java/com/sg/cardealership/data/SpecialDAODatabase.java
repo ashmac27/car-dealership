@@ -44,9 +44,9 @@ public class SpecialDAODatabase implements SpecialDAO {
     @Transactional
     public Special addSpecial(Special special) {
         final String ADD_SPECIAL = "INSERT INTO specials " +
-                "(SpecialId, Title, Description) " +
-                "VALUES (?, ?, ?)";
-        jdbcTemp.update(ADD_SPECIAL, special.getSpecialId(), special.getTitle(), special.getDescription());
+                "(Title, Description) " +
+                "VALUES (?, ?)";
+        jdbcTemp.update(ADD_SPECIAL, special.getTitle(), special.getDescription());
         int newId = jdbcTemp.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
         special.setSpecialId(newId);
         return special;
