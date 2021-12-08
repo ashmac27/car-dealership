@@ -129,10 +129,9 @@ public class MakeDAODatabaseTest {
         Assert.assertEquals(make,addedMake );
 
         // Act
-        makeDAO.deleteMakeById(make.getMakeId());
+        makeDAO.deleteMakeById(addedMake.getMakeId());
 
         // Assert
         Assert.assertNull(addedMake);
-
     }
 }
