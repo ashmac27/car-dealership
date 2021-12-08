@@ -38,7 +38,7 @@ public class VehicleDAODatabaseTest {
 
     // Tests getting a list of all vehicles
     @Test
-    @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
+    @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void getVehicleList() {
         // ARRANGE
         Vehicle vehicle1 = new Vehicle();
@@ -88,7 +88,7 @@ public class VehicleDAODatabaseTest {
 
     // Tests getting a list of featured vehicles
     @Test
-    @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
+    @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void getFeaturedVehicleList() {
         // ARRANGE
         Vehicle vehicle1 = new Vehicle();
@@ -138,7 +138,7 @@ public class VehicleDAODatabaseTest {
 
     // Tests get a list of vehicles given a criteria
     @Test
-    @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
+    @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void getVehicleListBySearchCriteria() {
         // ARRANGE
         Vehicle vehicle1 = new Vehicle();
@@ -191,7 +191,7 @@ public class VehicleDAODatabaseTest {
 
     // Gets a vehicle by Id
     @Test
-    @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
+    @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void getVehicleById() {
         // ARRANGE
         Vehicle vehicle1 = new Vehicle();
@@ -221,7 +221,7 @@ public class VehicleDAODatabaseTest {
 
     // Tests adding a vehicle to a database
     @Test
-    @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
+    @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void addVehicle() {
         // ARRANGE
         Vehicle vehicle1 = new Vehicle();
@@ -251,7 +251,7 @@ public class VehicleDAODatabaseTest {
 
     // Tests deleting a vehicle
     @Test
-    @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
+    @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void deleteVehicle() {
         // ARRANGE
         Vehicle vehicle1 = new Vehicle();
@@ -288,7 +288,7 @@ public class VehicleDAODatabaseTest {
 
     // Tests editing a vehicle
     @Test
-    @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
+    @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void editVehicle() {
         // ARRANGE
         Vehicle vehicle1 = new Vehicle();
