@@ -27,7 +27,7 @@ public class MakeDAODatabaseTest {
     public void tearDown() throws Exception{}
 
     @Test
-    @Sql(scripts = "file:car_dealership_schema_creation.sql")
+    @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void getAllMakes() {
         // Arrange
         Make make1 = new Make();
@@ -45,13 +45,13 @@ public class MakeDAODatabaseTest {
         List<Make> allMakes = makeDAO.getAllMakes();
 
         // Assert
-        Assert.assertEquals(2, allMakes);
+        Assert.assertEquals(6, allMakes.size());
         Assert.assertTrue(allMakes.contains(addedMake1));
         Assert.assertTrue(allMakes.contains(addedMake2));
     }
 
     @Test
-    @Sql(scripts = "file:car_dealership_schema_creation.sql")
+    @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void addMake() {
 
         // Arrange
@@ -63,11 +63,11 @@ public class MakeDAODatabaseTest {
         Make addedMake = makeDAO.addMake(make);
 
         // Assert
-        Assert.assertEquals(make, addedMake);
+        Assert.assertEquals(make.getMakeName(), addedMake.getMakeName());
     }
 
     @Test
-    @Sql(scripts = "file:car_dealership_schema_creation.sql")
+    @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void getMakeNameById() {
         // Arrange
         Make make = new Make();
@@ -85,25 +85,24 @@ public class MakeDAODatabaseTest {
     }
 
     @Test
-    @Sql(scripts = "file:car_dealership_schema_creation.sql")
+    @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void getMakeByName() {
         // Arrange
         Make make = new Make();
+        make.setMakeId(5);
         make.setMakeName("Ford");
         make.setUserId(1);
 
         // Act
         Make addedMake = makeDAO.addMake(make);
-        Make getMakeFromDao = makeDAO.getMakeByName(addedMake.getMakeName());
+        addedMake.setMakeName(makeDAO.getMakeNameById(addedMake.getMakeId()));
 
         // Assert
-        Assert.assertEquals(addedMake,getMakeFromDao );
-
-
+        Assert.assertEquals(make.getMakeId(),addedMake.getMakeId());
     }
 
     @Test
-    @Sql(scripts = "file:car_dealership_schema_creation.sql")
+    @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void getMakeById() {
         // Arrange
         Make make = new Make();
@@ -119,19 +118,21 @@ public class MakeDAODatabaseTest {
     }
 
     @Test
-    @Sql(scripts = "file:car_dealership_schema_creation.sql")
+    @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void deleteMakeById() {
         // Arrange
         Make make = new Make();
         make.setMakeName("Ford");
         make.setUserId(1);
         Make addedMake = makeDAO.addMake(make);
-        Assert.assertEquals(make,addedMake );
+        Assert.assertEquals(make.getMakeName(),addedMake.getMakeName());
 
         // Act
-        makeDAO.deleteMakeById(addedMake.getMakeId());
+        makeDAO.deleteMakeById(make.getMakeId());
+        Make deletedMake = makeDAO.getMakeById(make.getMakeId());
 
         // Assert
-        Assert.assertNull(addedMake);
+        Assert.assertNull(deletedMake);
+
     }
 }
