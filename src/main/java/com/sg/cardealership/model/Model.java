@@ -1,6 +1,7 @@
 package com.sg.cardealership.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Model {
     int modelId, makeId, userId;
@@ -70,5 +71,18 @@ public class Model {
 
     public void setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Model model = (Model) o;
+        return modelId == model.modelId && makeId == model.makeId && userId == model.userId && Objects.equals(modelName, model.modelName) && Objects.equals(dateAdded, model.dateAdded);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(modelId, makeId, userId, modelName, dateAdded);
     }
 }

@@ -1,6 +1,7 @@
 package com.sg.cardealership.model;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * This class represents a vehicle
@@ -182,5 +183,18 @@ public class Vehicle {
     // Sets the picture of the vehicle
     public void setPicture(String picture) {
         this.picture = picture;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return makeId == vehicle.makeId && modelId == vehicle.modelId && year == vehicle.year && mileage == vehicle.mileage && isFeatured == vehicle.isFeatured && isSold == vehicle.isSold && Objects.equals(VIN, vehicle.VIN) && Objects.equals(type, vehicle.type) && Objects.equals(bodyStyle, vehicle.bodyStyle) && Objects.equals(transmission, vehicle.transmission) && Objects.equals(color, vehicle.color) && Objects.equals(interior, vehicle.interior) && Objects.equals(salePrice, vehicle.salePrice) && Objects.equals(msrp, vehicle.msrp) && Objects.equals(description, vehicle.description) && Objects.equals(picture, vehicle.picture);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(VIN, makeId, modelId, type, bodyStyle, year, transmission, color, interior, mileage, salePrice, msrp, description, isFeatured, isSold, picture);
     }
 }

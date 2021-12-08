@@ -1,6 +1,7 @@
 package com.sg.cardealership.model;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Make {
     int makeId, userId;
@@ -60,5 +61,18 @@ public class Make {
 
     public void setDateAdded(LocalDate dateAdded) {
         this.dateAdded = dateAdded;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Make make = (Make) o;
+        return makeId == make.makeId && userId == make.userId && Objects.equals(makeName, make.makeName) && Objects.equals(dateAdded, make.dateAdded);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(makeId, userId, makeName, dateAdded);
     }
 }
