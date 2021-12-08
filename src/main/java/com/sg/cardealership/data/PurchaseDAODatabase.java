@@ -147,15 +147,15 @@ public class PurchaseDAODatabase implements PurchaseDAO {
     //TODO: Fix this!
     @Override
     public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate toDate, LocalDate fromDate) {
-        String sql = "SELECT CONCAT(user.FirstName, ' ', user.LastName) AS 'User', SUM(purchase.PurchasePrice) AS 'Total Sales', COUNT(*) AS 'Total Vehicles'" + 
-                " FROM purchase INNER JOIN user ON user.UserId = purchase.SalespersonId WHERE Role='sales' purchase.DateOfPurchase >= ? AND purchase.DateOfPurchase <= ?";
+        String sql = "SELECT CONCAT(`user`.FirstName, ' ', `user`.LastName) AS `user`, SUM(purchase.PurchasePrice) AS `Total Sales`, COUNT(*) AS `Total Vehicles`" +
+                " FROM purchase INNER JOIN `user` ON `user`.UserId = purchase.SalespersonId WHERE Role='sales' AND purchase.DateOfPurchase >= ? AND purchase.DateOfPurchase <= ?";
         if(salespersonId==null) {
             sql += " AND SalespersonId <> ?";
             salespersonId = 0; // <> 0 should be every user
         } else {
             sql += " AND SalespersonId = ?";
         }
-        sql += "GROUP BY purchase.SalespersonId ORDER BY User ASC";
+        sql += " GROUP BY purchase.SalespersonId ORDER BY User ASC";
         if(toDate==null) {
             toDate = LocalDate.now();
         }
@@ -163,8 +163,8 @@ public class PurchaseDAODatabase implements PurchaseDAO {
             fromDate = LocalDate.MIN;
         }
         return template.query(sql, new ColumnMapRowMapper(),
-                Timestamp.valueOf(LocalDateTime.of(fromDate, LocalTime.MIN)), // earliest possible date if not specified
-                Timestamp.valueOf(LocalDateTime.of(toDate, LocalTime.MAX)), // Maximum time of today if not specified
+                Timestamp.valueOf(LocalDateTime.of(fromDate, LocalTime.MIN)).getTime(), // earliest possible date if not specified
+                Timestamp.valueOf(LocalDateTime.of(toDate, LocalTime.MAX)).getTime(), // Maximum time of today if not specified
                 salespersonId
         ); // Custom mapper for report, a model that is only selected once
     }
