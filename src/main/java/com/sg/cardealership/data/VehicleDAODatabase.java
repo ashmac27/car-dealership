@@ -107,20 +107,20 @@ public class VehicleDAODatabase implements VehicleDAO {
     @Transactional
     public boolean editVehicle(String vin, Vehicle vehicle) {
         final String UPDATE_VEHICLE = "UPDATE vehicle SET " +
-                "MakeId = ? " +
-                "ModelId = ? " +
-                "`Type` = ? " +
-                "BodyStyle = ? " +
-                "`Year` = ? " +
-                "Transmission = ? " +
-                "Color = ? " +
-                "Interior = ? " +
-                "Mileage = ? " +
-                "SalePrice = ? " +
-                "MSRP = ? " +
-                "`Description` = ? " +
-                "IsFeature = ? " +
-                "IsSold = ? " +
+                "MakeId = ?, " +
+                "ModelId = ?, " +
+                "`Type` = ?, " +
+                "BodyStyle = ?, " +
+                "`Year` = ?, " +
+                "Transmission = ?, " +
+                "Color = ?, " +
+                "Interior = ?, " +
+                "Mileage = ?, " +
+                "SalePrice = ?, " +
+                "MSRP = ?, " +
+                "`Description` = ?, " +
+                "IsFeatured = ?, " +
+                "IsSold = ?, " +
                 "Picture = ? " +
                 "WHERE VIN = ?";
 

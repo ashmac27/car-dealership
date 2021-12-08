@@ -16,20 +16,22 @@ public class SalesController {
     @Autowired
     private CarDealershipService service;
 
-    // TODO: Improve method & change mapping
+    // Gets all vehicles that are for sale
     @GetMapping("/index")
     public List<Vehicle> getVehiclesForSale (@RequestBody SearchCriteria criteria){
-        return service.getListOfVehiclesByCriteria(criteria).stream().filter(vehicle-> !vehicle.isSold()).collect(Collectors.toList());
+        criteria.setSold(false);
+        return service.getListOfVehiclesByCriteria(criteria);
     }
 
+    // Get the info for the car that is going to be purchased
     @GetMapping("/purchase/{VIN}")
     public Vehicle getVehiclePurchase(@PathVariable String VIN){
         return service.getVehicleByVin(VIN);
     }
 
+    // Creates a purchase for the car
     @PostMapping("/purchase/{VIN}")
     public Purchase postPurchase(@PathVariable String VIN, @RequestBody Purchase purchase){
-        purchase.setVIN(VIN);
-        return service.postAddPurchase(purchase);
+        return service.postAddPurchase(VIN, purchase);
     }
 }

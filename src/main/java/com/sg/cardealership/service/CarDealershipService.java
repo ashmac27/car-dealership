@@ -78,5 +78,5 @@ public interface CarDealershipService {
     Vehicle getVehicleByVin(String VIN);
 
     // Adds/post a new purchase
-    Purchase postAddPurchase(Purchase purchase);
+    Purchase postAddPurchase(String VIN, Purchase purchase);
 }

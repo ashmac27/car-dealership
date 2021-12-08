@@ -34,13 +34,13 @@ public class PurchaseDAODatabase implements PurchaseDAO {
 
     @Override
     public Purchase add(Purchase purchase) {
-        final String sql = "INTSERT INTO purchase(SalespersonId, PurchasePrice, VIN, PurchaseType, Name, Phone, Email, Street1, Street2, City, State, Zip)"
-                + " VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        final String sql = "INSERT INTO purchase(SalespersonId, PurchasePrice, VIN, PurchaseType, Name, Phone, Email, Street1, Street2, City, State, Zip)"
+                + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
         GeneratedKeyHolder keyHolder = new GeneratedKeyHolder();
-        
+
         template.update((Connection conn) -> {
             PreparedStatement statement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            
+
             // Default value generated is PurchaseId
             statement.setInt(1, purchase.getSalespersonId());
             statement.setBigDecimal(2, purchase.getPurchasePrice());
@@ -50,31 +50,32 @@ public class PurchaseDAODatabase implements PurchaseDAO {
             statement.setString(8, purchase.getStreet1());
             statement.setString(10, purchase.getCity());
             statement.setString(11, purchase.getState());
-            
+            statement.setString(12, purchase.getZip());
+
             // Sets phone value, if null or not
             if(purchase.getPhone()!=null) {
                 statement.setString(6, purchase.getPhone());
             } else {
                 statement.setNull(6, Types.NULL);
             }
-            
+
             // Sets email value, if null or not
             if(purchase.getEmail()!=null) {
                 statement.setString(7, purchase.getEmail());
             } else {
                 statement.setNull(7, Types.NULL);
             }
-            
+
             // Sets street2 value, if null or not
             if(purchase.getStreet2()!=null) {
                 statement.setString(9, purchase.getStreet2());
             } else {
                 statement.setNull(9, Types.NULL);
             }
-            
+
             return statement;
         },keyHolder);
-        
+
         // Select item again, contains all generated values
         return getPurchaseByPurchaseId(keyHolder.getKey().intValue());
     }

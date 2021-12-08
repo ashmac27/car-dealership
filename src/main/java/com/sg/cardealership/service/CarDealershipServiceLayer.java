@@ -152,7 +152,10 @@ public class CarDealershipServiceLayer implements CarDealershipService {
 
     //Post/Adds a purchase
     @Override
-    public Purchase postAddPurchase(Purchase purchase) {
+    public Purchase postAddPurchase(String VIN, Purchase purchase) {
+        Vehicle vehicle = vehicleDAO.getVehicleById(VIN);
+        vehicle.setSold(true);
+        vehicleDAO.editVehicle(VIN, vehicle);
         return purchaseDAO.add(purchase);
     }
 }
