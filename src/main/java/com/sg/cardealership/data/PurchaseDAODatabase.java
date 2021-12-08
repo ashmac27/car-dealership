@@ -148,7 +148,7 @@ public class PurchaseDAODatabase implements PurchaseDAO {
     @Override
     public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate toDate, LocalDate fromDate) {
         String sql = "SELECT CONCAT(`user`.FirstName, ' ', `user`.LastName) AS `user`, SUM(purchase.PurchasePrice) AS `Total Sales`, COUNT(*) AS `Total Vehicles`" +
-                " FROM purchase INNER JOIN `user` ON `user`.UserId = purchase.SalespersonId WHERE Role='sales' AND purchase.DateOfPurchase >= ? AND purchase.DateOfPurchase <= ?";
+                " FROM purchase INNER JOIN `user` ON `user`.UserId = purchase.SalespersonId WHERE Role='sales' AND purchase.DateOfPurchase <= ? AND purchase.DateOfPurchase >= ?";
         if(salespersonId==null) {
             sql += " AND SalespersonId <> ?";
             salespersonId = 0; // <> 0 should be every user
