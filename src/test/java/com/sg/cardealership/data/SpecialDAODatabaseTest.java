@@ -14,6 +14,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.List;
 
+/**
+ * Tests the special dao
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
 public class SpecialDAODatabaseTest {
@@ -29,6 +32,7 @@ public class SpecialDAODatabaseTest {
     public void tearDown() throws Exception {
     }
 
+    // Tests get special by id
     @Test
     @Sql(scripts = "file:car_dealership_schema_creation.sql")
     public void getSpecialById() {
@@ -45,6 +49,7 @@ public class SpecialDAODatabaseTest {
         Assert.assertEquals(addedSpecial, getSpecial);
     }
 
+    // Tests get list of all specials
     @Test
     @Sql(scripts = "file:car_dealership_schema_creation_test.sql")
     public void getSpecialList() {
@@ -67,6 +72,7 @@ public class SpecialDAODatabaseTest {
         Assert.assertTrue(specialList.contains(addedSpecial2));
     }
 
+    // Tests adding specials
     @Test
     @Sql(scripts = "file:car_dealership_schema_creation_test.sql")
     public void addSpecial() {
@@ -82,6 +88,7 @@ public class SpecialDAODatabaseTest {
         Assert.assertEquals(special, addedSpecial);
     }
 
+    // Tests deleting a special
     @Test
     @Sql(scripts = "file:car_dealership_schema_creation_test.sql")
     public void deleteSpecial() {

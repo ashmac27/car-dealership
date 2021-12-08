@@ -18,6 +18,9 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+/**
+ * Tests vehicle DAO
+ */
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
 public class VehicleDAODatabaseTest {
@@ -33,6 +36,7 @@ public class VehicleDAODatabaseTest {
     public void tearDown() throws Exception {
     }
 
+    // Tests getting a list of all vehicles
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
     public void getVehicleList() {
@@ -82,6 +86,7 @@ public class VehicleDAODatabaseTest {
         Assert.assertTrue(vehicleList.contains(vehicle1));
     }
 
+    // Tests getting a list of featured vehicles
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
     public void getFeaturedVehicleList() {
@@ -131,6 +136,7 @@ public class VehicleDAODatabaseTest {
         Assert.assertFalse(vehicleList.contains(vehicle1));
     }
 
+    // Tests get a list of vehicles given a criteria
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
     public void getVehicleListBySearchCriteria() {
@@ -183,6 +189,7 @@ public class VehicleDAODatabaseTest {
         Assert.assertTrue(vehicleList.contains(vehicle1));
     }
 
+    // Gets a vehicle by Id
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
     public void getVehicleById() {
@@ -212,6 +219,7 @@ public class VehicleDAODatabaseTest {
         Assert.assertEquals(vehicle1, getVehicle);
     }
 
+    // Tests adding a vehicle to a database
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
     public void addVehicle() {
@@ -241,6 +249,7 @@ public class VehicleDAODatabaseTest {
         Assert.assertEquals(vehicle1, addedVehicle);
     }
 
+    // Tests deleting a vehicle
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
     public void deleteVehicle() {
@@ -277,6 +286,7 @@ public class VehicleDAODatabaseTest {
 
     }
 
+    // Tests editing a vehicle
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql", "file:car_dealership_test_data.sql"})
     public void editVehicle() {
