@@ -21,25 +21,24 @@ public class ModelDAODatabase implements ModelDAO{
     @Override
     @Transactional
     public Model addModel(Model model) {
-        final String INSERT_MODEL = "INSERT INTO model(MakeId, ModelName, DateAdded, UserId) "
-                + "VALUES(?, ?, ?, ?)";
+        final String INSERT_MODEL = "INSERT INTO model(MakeId, ModelName, UserId) "
+                + "VALUES(?, ?, ?)";
         jdbc.update(INSERT_MODEL,
                 model.getMakeId(),
                 model.getModelName(),
-                model.getDateAdded(),
                 model.getUserId());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        model.setModelId(newId);
 
-        return model;
+        Model newModel = getModelById(newId);
+        return newModel;
     }
 
     @Override
     public Model getModelById(int id) {
         try {
 
-            final String SELECT_MODEL = "SELECT * FROM model WHERE id = ?";
+            final String SELECT_MODEL = "SELECT * FROM model WHERE modelId = ?";
             Model model = jdbc.queryForObject(SELECT_MODEL, new ModelMapper(), id);
             return model;
 
@@ -75,7 +74,7 @@ public class ModelDAODatabase implements ModelDAO{
     @Override
     @Transactional
     public void deleteModelById(int id) {
-        final String DELETE_MODEL = "DELETE FROM model WHERE id = ?";
+        final String DELETE_MODEL = "DELETE FROM model WHERE modelId = ?";
         jdbc.update(DELETE_MODEL, id);
     }
 

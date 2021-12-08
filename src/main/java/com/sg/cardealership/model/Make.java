@@ -7,6 +7,10 @@ public class Make {
     String makeName;
     LocalDate dateAdded;
 
+    public Make() {
+
+    }
+
     public Make(int makeId, int userId, String makeName, LocalDate dateAdded) {
         this.makeId = makeId;
         this.userId = userId;

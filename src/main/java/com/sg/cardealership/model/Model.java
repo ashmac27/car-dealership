@@ -7,6 +7,10 @@ public class Model {
     String modelName;
     LocalDate dateAdded;
 
+    public Model() {
+
+    }
+
     public Model(int modelId, int makeId, int userId, String modelName, LocalDate dateAdded) {
         this.modelId = modelId;
         this.makeId = makeId;

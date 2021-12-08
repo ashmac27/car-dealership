@@ -30,18 +30,13 @@ public class MakeDAODatabase implements MakeDAO {
     @Override
     @Transactional
     public Make addMake(Make make) {
-
-        final String INSERT_MAKE = "INSERT INTO make(MakeName, DateAdded, UserId) "
-                + "VALUES(?, ? ,?)";
+        final String INSERT_MAKE = "INSERT INTO make(MakeName, UserId) "
+                + "VALUES(?, ?)";
         jdbc.update(INSERT_MAKE,
-                make.getMakeName(),
-                make.getDateAdded());
-        make.getUserId();
+                make.getMakeName(), make.getUserId());
 
         int newId = jdbc.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
-        make.setMakeId(newId);
-
-        return make;
+        return this.getMakeById(newId);
     }
 
     @Override
@@ -68,10 +63,8 @@ public class MakeDAODatabase implements MakeDAO {
 
     @Override
     public Make getMakeById(int id) {
-
         try {
-
-            final String SELECT_MAKE = "SELECT * FROM make WHERE id = ?";
+            final String SELECT_MAKE = "SELECT * FROM make WHERE makeId = ?";
             Make make = jdbc.queryForObject(SELECT_MAKE, new MakeMapper(), id);
             return make;
 
@@ -83,7 +76,7 @@ public class MakeDAODatabase implements MakeDAO {
     @Override
     @Transactional
     public void deleteMakeById(int id) {
-        final String DELETE_MAKE = "DELETE FROM make WHERE id = ?";
+        final String DELETE_MAKE = "DELETE FROM make WHERE makeId = ?";
         jdbc.update(DELETE_MAKE, id);
     }
 

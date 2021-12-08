@@ -20,6 +20,7 @@ public class AdminController {
     // Gets a list of vehicles given a search criteria
     @PostMapping("/vehicles")
     public List<Vehicle> vehicles(@RequestBody SearchCriteria criteria) {
+        criteria.setSold(false);
         return service.getListOfVehiclesByCriteria(criteria);
     }
 
