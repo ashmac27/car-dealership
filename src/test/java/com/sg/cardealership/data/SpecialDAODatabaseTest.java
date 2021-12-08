@@ -34,7 +34,7 @@ public class SpecialDAODatabaseTest {
 
     // Tests get special by id
     @Test
-    @Sql(scripts = "file:car_dealership_schema_creation.sql")
+    @Sql(scripts = "file:car_dealership_schema_creation_test.sql")
     public void getSpecialById() {
         // ARRANGE
         Special special = new Special();
