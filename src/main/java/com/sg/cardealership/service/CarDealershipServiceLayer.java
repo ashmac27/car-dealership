@@ -135,7 +135,11 @@ public class CarDealershipServiceLayer implements CarDealershipService {
 
     @Override
     public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate fromDate, LocalDate toDate) {
-        if (!fromDate.isBefore(toDate)) throw new IllegalArgumentException("toDate must be after forDate");
+        if (fromDate != null) {
+            if (toDate != null && !fromDate.isBefore(toDate)){
+                throw new IllegalArgumentException("toDate must be after forDate");
+            }
+        }
         return purchaseDAO.getSalesReport(salespersonId, toDate, fromDate);
     }
 

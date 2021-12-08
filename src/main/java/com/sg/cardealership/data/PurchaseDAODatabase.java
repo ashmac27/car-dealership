@@ -144,6 +144,7 @@ public class PurchaseDAODatabase implements PurchaseDAO {
         return template.update(sql, purchaseId) > 0;
     }
 
+    //TODO: Fix this!
     @Override
     public List<Map<String, Object>> getSalesReport(Integer salespersonId, LocalDate toDate, LocalDate fromDate) {
         String sql = "SELECT CONCAT(user.FirstName, ' ', user.LastName) AS 'User', SUM(purchase.PurchasePrice) AS 'Total Sales', COUNT(*) AS 'Total Vehicles'" + 
@@ -155,8 +156,12 @@ public class PurchaseDAODatabase implements PurchaseDAO {
             sql += " AND SalespersonId = ?";
         }
         sql += "GROUP BY purchase.SalespersonId ORDER BY User ASC";
-        if(toDate==null) toDate = LocalDate.now();
-        if(fromDate==null) fromDate = LocalDate.MIN;
+        if(toDate==null) {
+            toDate = LocalDate.now();
+        }
+        if(fromDate==null) {
+            fromDate = LocalDate.MIN;
+        }
         return template.query(sql, new ColumnMapRowMapper(),
                 Timestamp.valueOf(LocalDateTime.of(fromDate, LocalTime.MIN)), // earliest possible date if not specified
                 Timestamp.valueOf(LocalDateTime.of(toDate, LocalTime.MAX)), // Maximum time of today if not specified
