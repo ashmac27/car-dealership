@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS vehicle (
   `Description` TEXT,
   IsFeatured BOOLEAN NOT NULL,
   IsSold BOOLEAN NOT NULL,
-  Picture BLOB,
+  Picture VARCHAR(320),
   FOREIGN KEY (MakeId) REFERENCES make(MakeId),
   FOREIGN KEY (ModelId) REFERENCES model(ModelId)
 );

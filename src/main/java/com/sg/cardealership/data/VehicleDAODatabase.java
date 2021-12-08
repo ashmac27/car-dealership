@@ -36,7 +36,7 @@ public class VehicleDAODatabase implements VehicleDAO {
     public List<Vehicle> getFeaturedVehicleList() {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
                 "FROM vehicle " +
-                "WHERE IsFeatured = 'true'";
+                "WHERE IsFeatured = true";
         List<Vehicle> vehicleList = jdbcTemp.query(SELECT_LIST_OF_VEHICLE, new VehicleMapper());
         return vehicleList;
     }
@@ -212,7 +212,7 @@ public class VehicleDAODatabase implements VehicleDAO {
             vehicle.setDescription(resultSet.getString("Description"));
             vehicle.setFeatured(resultSet.getBoolean("IsFeatured"));
             vehicle.setSold(resultSet.getBoolean("IsSold"));
-            vehicle.setPicture(resultSet.getBlob("Picture"));
+            vehicle.setPicture(resultSet.getString("Picture"));
             return vehicle;
         }
     }

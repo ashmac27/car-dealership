@@ -1,7 +1,6 @@
 package com.sg.cardealership.model;
 
 import java.math.BigDecimal;
-import java.sql.Blob;
 
 /**
  * This class represents a vehicle
@@ -23,7 +22,7 @@ public class Vehicle {
     private String description;
     private boolean isFeatured;
     private boolean isSold;
-    private Blob picture;
+    private String picture;
 
     // Gets the vin of the vehicle
     public String getVIN() {
@@ -176,12 +175,12 @@ public class Vehicle {
     }
 
     // Gets the picture of the vehicle
-    public Blob getPicture() {
+    public String getPicture() {
         return picture;
     }
 
     // Sets the picture of the vehicle
-    public void setPicture(Blob picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
 }
