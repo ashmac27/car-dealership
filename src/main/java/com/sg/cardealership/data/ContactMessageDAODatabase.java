@@ -25,12 +25,10 @@ public class ContactMessageDAODatabase implements ContactMessageDAO {
     @Override
     public ContactMessage add(ContactMessage contactMessage) {
         final String sql = "INSERT INTO contact_message (Name, Message, Email, Phone) VALUES (?, ?, ?, ?)";
-        template.update(sql,contactMessage.getName(), contactMessage.getMessage(),
-                // Handle NULL values if they are null
-                (contactMessage.getEmail()==null) ? new SqlParameterValue(Types.NULL,"Email") : contactMessage.getEmail(),
-                (contactMessage.getPhone()==null) ? new SqlParameterValue(Types.NULL,"Phone") : contactMessage.getPhone()
-        );
-        return getContactMessageById(template.queryForObject("SELECT LAST_INSERTED_ID()", Integer.class));
+        template.update(sql,contactMessage.getName(), contactMessage.getMessage(), contactMessage.getEmail(), contactMessage.getPhone());
+        int newId = template.queryForObject("SELECT LAST_INSERT_ID()", Integer.class);
+        contactMessage.setContactMessageId(newId);
+        return contactMessage;
     }
 
     @Override
