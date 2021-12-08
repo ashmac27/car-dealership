@@ -31,12 +31,12 @@ public class MakeDAODatabaseTest {
     public void getAllMakes() {
         // Arrange
         Make make1 = new Make();
-        make1.setMakeName("Make_Name");
-        make1.setUserId(2);
+        make1.setMakeName("Ford");
+        make1.setUserId(1);
 
         Make make2 = new Make();
-        make2.setMakeName("Make_Name");
-        make2.setUserId(2);
+        make2.setMakeName("Honda");
+        make2.setUserId(1);
 
         Make addedMake1 = makeDAO.addMake(make1);
         Make addedMake2 = makeDAO.addMake(make2);
@@ -56,8 +56,8 @@ public class MakeDAODatabaseTest {
 
         // Arrange
         Make make = new Make();
-        make.setMakeName("Make_Name");
-        make.setUserId(2);
+        make.setMakeName("Ford");
+        make.setUserId(1);
 
         // Act
         Make addedMake = makeDAO.addMake(make);
@@ -71,8 +71,8 @@ public class MakeDAODatabaseTest {
     public void getMakeNameById() {
         // Arrange
         Make make = new Make();
-        make.setMakeName("Make_Name");
-        make.setUserId(2);
+        make.setMakeName("Ford");
+        make.setUserId(1);
 
         // Act
         Make addedMake = makeDAO.addMake(make);
@@ -89,8 +89,8 @@ public class MakeDAODatabaseTest {
     public void getMakeByName() {
         // Arrange
         Make make = new Make();
-        make.setMakeName("Make_Name");
-        make.setUserId(2);
+        make.setMakeName("Ford");
+        make.setUserId(1);
 
         // Act
         Make addedMake = makeDAO.addMake(make);
@@ -107,8 +107,8 @@ public class MakeDAODatabaseTest {
     public void getMakeById() {
         // Arrange
         Make make = new Make();
-        make.setMakeName("Make_Name");
-        make.setUserId(2);
+        make.setMakeName("Ford");
+        make.setUserId(1);
 
         // Act
         Make addedMake = makeDAO.addMake(make);
@@ -123,8 +123,8 @@ public class MakeDAODatabaseTest {
     public void deleteMakeById() {
         // Arrange
         Make make = new Make();
-        make.setMakeName("Make_Name");
-        make.setUserId(2);
+        make.setMakeName("Ford");
+        make.setUserId(1);
         Make addedMake = makeDAO.addMake(make);
         Assert.assertEquals(make,addedMake );
 
