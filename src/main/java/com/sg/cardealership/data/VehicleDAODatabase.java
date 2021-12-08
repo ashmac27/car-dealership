@@ -45,9 +45,9 @@ public class VehicleDAODatabase implements VehicleDAO {
     @Override
     public List<Vehicle> getVehicleListBySearchCriteria(SearchCriteria criteria) {
         final String SELECT_LIST_OF_VEHICLE = "SELECT * " +
-                "FROM vehicle v" +
-                "INNER JOIN Model mo ON v.ModelId = mo.ModelId " +
-                "INNER JOIN Make ma ON v.MakeId = ma.MakeId" +
+                "FROM vehicle v " +
+                "INNER JOIN model mo ON v.ModelId = mo.ModelId " +
+                "INNER JOIN make ma ON v.MakeId = ma.MakeId" +
                 generateSearchCriteriaCondition(criteria);
         List<Vehicle> vehicleList = jdbcTemp.query(SELECT_LIST_OF_VEHICLE, new VehicleMapper());
         return vehicleList;
@@ -153,16 +153,16 @@ public class VehicleDAODatabase implements VehicleDAO {
         List<String> listOfConditions = new ArrayList<>();
 
         if (criteria.getType() != null) {
-            listOfConditions.add("v.Type = " + criteria.getType());
+            listOfConditions.add("v.Type = \"" + criteria.getType() + "\"");
         }
         if (criteria.getSold() != null) {
             listOfConditions.add("v.IsSold = " + criteria.getSold().toString());
         }
         if (criteria.getModel() != null) {
-            listOfConditions.add("mo.Model LIKE %" + criteria.getModel() + "%");
+            listOfConditions.add("mo.ModelName = \"" + criteria.getModel() + "\"");
         }
         if (criteria.getMake() != null) {
-            listOfConditions.add("ma.Model LIKE %" + criteria.getMake() + "%");
+            listOfConditions.add("ma.MakeName = \"" + criteria.getMake() + "\"");
         }
         if (criteria.getYear() != null) {
             listOfConditions.add("v.`Year` = " + criteria.getYear().toString());
