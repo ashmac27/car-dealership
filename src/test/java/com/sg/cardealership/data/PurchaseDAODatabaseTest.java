@@ -168,11 +168,9 @@ public class PurchaseDAODatabaseTest {
             assertFalse(purchaseDAO.update(purchase));
         });
         // City can't be null, unsure of which exception will throw
-        assertThrows(Exception.class, () -> {
-            Purchase p = oldList.get(0);
-            p.setCity(null);
-            purchaseDAO.update(p);
-        });
+        Purchase p = oldList.get(0);
+        p.setCity(null);
+        assertFalse(purchaseDAO.update(p));
     }
     
     @Test
