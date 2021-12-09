@@ -462,7 +462,7 @@ public class CarDealershipServiceTest {
 
         Assert.assertEquals(message, newMessage);
     }
-
+    
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation_test.sql", "file:car_dealership_test_data.sql"})
     public void getVehicleByVin() {
