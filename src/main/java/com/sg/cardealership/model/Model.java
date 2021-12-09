@@ -90,4 +90,5 @@ public class Model {
 
         return Objects.hash(modelId, makeId, userId, modelName, dateAdded);
     }
+    
 }

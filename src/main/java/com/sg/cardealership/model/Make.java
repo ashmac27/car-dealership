@@ -79,4 +79,5 @@ public class Make {
 
         return Objects.hash(makeId, userId, makeName, dateAdded);
     }
+
 }
