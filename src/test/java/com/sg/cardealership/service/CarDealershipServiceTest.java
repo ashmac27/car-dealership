@@ -554,16 +554,16 @@ public class CarDealershipServiceTest {
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void salesReportTest() {
-        Map<String, Integer> numberSoldByUser = new HashMap<String, Integer>();
+        Map<String, Long> numberSoldByUser = new HashMap<String, Long>();
         Map<String, BigDecimal> totalSoldByUser = new HashMap<String, BigDecimal>();
         for(User u : service.getListOfUsers()) {
             String name = u.getFirstName()+" "+u.getLastName();
             List<Purchase> inventoryList = purchaseDAO.getPurchasesBySalespersonId(u.getUserId());
             if(inventoryList.size()==0) {
-                numberSoldByUser.put(name,0);
+                numberSoldByUser.put(name,(long) 0);
                 totalSoldByUser.put(name,BigDecimal.ZERO.setScale(2,RoundingMode.HALF_UP));
             } else {
-                numberSoldByUser.put(name,inventoryList.size());
+                numberSoldByUser.put(name,(long) inventoryList.size());
                 BigDecimal total = BigDecimal.ZERO.setScale(2,RoundingMode.HALF_UP);
                 for(Purchase p : inventoryList) {
                     total = total.add(p.getPurchasePrice());
@@ -575,7 +575,7 @@ public class CarDealershipServiceTest {
         List<Map<String,Object>> report = service.getSalesReport(null,null,null);
         for(Map<String,Object> record : service.getSalesReport(null,null,null)) {
             String user = (String) record.get("user");
-            numberSoldByUser.replace(user, numberSoldByUser.get(user) - (Integer) record.get("Total Vehicles"));
+            numberSoldByUser.replace(user, numberSoldByUser.get(user) - (long) record.get("Total Vehicles"));
             totalSoldByUser.replace(user, totalSoldByUser.get(user).subtract(BigDecimal.valueOf((Double) record.get("Total Sales")).setScale(2,RoundingMode.HALF_UP)));
         }
         for(User u : service.getListOfUsers()) {
@@ -593,14 +593,14 @@ public class CarDealershipServiceTest {
         for(Vehicle p : currentInventory) {
             totalInventoryPrice = totalInventoryPrice.add(p.getMsrp());
         }
-        int inventorySize = 0;
+        long inventorySize = 0;
         BigDecimal reportPrice = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         for(Map<String,Object> inventoryRecord : service.getInventoryReport(true)) {
-            inventorySize+=(Integer) inventoryRecord.get("Count");
+            inventorySize+=(long) inventoryRecord.get("Count");
             totalInventoryPrice = totalInventoryPrice.add(BigDecimal.valueOf((Double) inventoryRecord.get("Stock Value")).setScale(2,RoundingMode.HALF_UP));
         }
         for(Map<String,Object> inventoryRecord : service.getInventoryReport(false)) {
-            inventorySize+=(Integer) inventoryRecord.get("Count");
+            inventorySize+=(long) inventoryRecord.get("Count");
             totalInventoryPrice = totalInventoryPrice.add(BigDecimal.valueOf((Double) inventoryRecord.get("Stock Value")).setScale(2,RoundingMode.HALF_UP));
         }
         assertEquals(inventorySize,currentInventory.size());
