@@ -254,8 +254,6 @@ public class CarDealershipServiceTest {
 
     }
 
-    //==========================================================
-
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation_test.sql"})
     public void getListOfUsers() {
