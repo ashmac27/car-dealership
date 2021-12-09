@@ -28,6 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestApplicationConfiguration.class)
@@ -587,6 +588,22 @@ public class CarDealershipServiceTest {
     @Test
     @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void inventoryReportTest() {
-        
+        List<Vehicle> currentInventory = vehicleDAO.getVehicleList().stream().filter(vehicle -> !vehicle.isSold()).collect(Collectors.toList());
+        BigDecimal totalInventoryPrice = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        for(Vehicle p : currentInventory) {
+            totalInventoryPrice = totalInventoryPrice.add(p.getMsrp());
+        }
+        int inventorySize = 0;
+        BigDecimal reportPrice = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        for(Map<String,Object> inventoryRecord : service.getInventoryReport(true)) {
+            inventorySize+=(Integer) inventoryRecord.get("Count");
+            totalInventoryPrice = totalInventoryPrice.add(BigDecimal.valueOf((Double) inventoryRecord.get("Stock Value")).setScale(2,RoundingMode.HALF_UP));
+        }
+        for(Map<String,Object> inventoryRecord : service.getInventoryReport(false)) {
+            inventorySize+=(Integer) inventoryRecord.get("Count");
+            totalInventoryPrice = totalInventoryPrice.add(BigDecimal.valueOf((Double) inventoryRecord.get("Stock Value")).setScale(2,RoundingMode.HALF_UP));
+        }
+        assertEquals(inventorySize,currentInventory.size());
+        assertTrue(totalInventoryPrice.equals(reportPrice));
     }
 }
