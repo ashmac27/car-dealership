@@ -39,7 +39,7 @@ public class ContactMessageDAODatabase implements ContactMessageDAO {
 
     @Override
     public ContactMessage getContactMessageById(int contactMessageId) {
-        final String sql = "SELECT * FROM contact_message";
+        final String sql = "SELECT * FROM contact_message WHERE ContactMessageId = ?";
         return template.queryForObject(sql, new ContactMessageMapper(), contactMessageId);
     }
 
@@ -51,11 +51,8 @@ public class ContactMessageDAODatabase implements ContactMessageDAO {
                 "Email = ?, "+
                 "Phone = ? "+
                 "WHERE ContactMessageId = ?";
-        return template.update(sql, contactMessage.getName(), contactMessage.getMessage(),
-                (contactMessage.getEmail()==null) ? new SqlParameterValue(Types.NULL,"Email") : contactMessage.getEmail(),
-                (contactMessage.getPhone()==null) ? new SqlParameterValue(Types.NULL,"Phone") : contactMessage.getPhone(),
-                contactMessage.getContactMessageId()
-            ) > 0;
+        return template.update(sql, contactMessage.getName(), contactMessage.getMessage(), contactMessage.getEmail(),
+                contactMessage.getPhone(), contactMessage.getContactMessageId()) > 0;
     }
 
     @Override

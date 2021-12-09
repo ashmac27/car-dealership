@@ -93,6 +93,7 @@ public class ContactMessageDAODatabaseTest {
         // ACT
         ContactMessage getMessage = contactDao.getContactMessageById(newMessage.getContactMessageId());
 
+        // ASSERT
         Assert.assertEquals(newMessage, getMessage);
     }
 
@@ -100,15 +101,44 @@ public class ContactMessageDAODatabaseTest {
     @Sql(scripts = "file:car_dealership_schema_creation_test.sql")
     public void update() {
         // ARRANGE
+        ContactMessage message = new ContactMessage();
+        message.setMessage("Hello World");
+        message.setEmail("email@email.com");
+        message.setName("name");
+        message.setPhone(null);
+        ContactMessage newMessage = contactDao.add(message);
+        ContactMessage getMessage = contactDao.getContactMessageById(newMessage.getContactMessageId());
+        Assert.assertEquals(newMessage, getMessage);
+
+        newMessage.setMessage("Hey Guys");
+
         // ACT
-        // ASSERT
+        boolean isEditMessage = contactDao.update(newMessage);
+        ContactMessage editedMessage = contactDao.getContactMessageById(newMessage.getContactMessageId());
+
+        Assert.assertTrue(isEditMessage);
+        Assert.assertEquals(newMessage, editedMessage);
     }
 
     @Test
     @Sql(scripts = "file:car_dealership_schema_creation_test.sql")
     public void deleteByContactMessageId() {
         // ARRANGE
+        ContactMessage message = new ContactMessage();
+        message.setMessage("Hello World");
+        message.setEmail("email@email.com");
+        message.setName("name");
+        message.setPhone(null);
+        ContactMessage newMessage = contactDao.add(message);
+        ContactMessage getMessage = contactDao.getContactMessageById(newMessage.getContactMessageId());
+        Assert.assertEquals(newMessage, getMessage);
+
         // ACT
+        boolean isDeleted = contactDao.deleteByContactMessageId(newMessage.getContactMessageId());
+        List<ContactMessage> listOfMessage = contactDao.getAll();
+
         // ASSERT
+        Assert.assertTrue(isDeleted);
+        Assert.assertFalse(listOfMessage.contains(newMessage));
     }
 }
