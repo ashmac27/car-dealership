@@ -49,7 +49,7 @@ public class UserDAODatabaseTest {
         List<User> allUsers = userDAO.getAllUsers();
 
         // Assert
-        Assert.assertEquals(2, allUsers);
+        Assert.assertEquals(2, allUsers.size());
         Assert.assertTrue(allUsers.contains(addedUser1));
         Assert.assertTrue(allUsers.contains(addedUser2));
 
