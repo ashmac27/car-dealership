@@ -576,7 +576,7 @@ public class CarDealershipServiceTest {
         for(Map<String,Object> record : service.getSalesReport(null,null,null)) {
             String user = (String) record.get("user");
             numberSoldByUser.replace(user, numberSoldByUser.get(user) - (long) record.get("Total Vehicles"));
-            totalSoldByUser.replace(user, totalSoldByUser.get(user).subtract(BigDecimal.valueOf((Double) record.get("Total Sales")).setScale(2,RoundingMode.HALF_UP)));
+            totalSoldByUser.replace(user, totalSoldByUser.get(user).subtract((BigDecimal) record.get("Total Sales")));
         }
         for(User u : service.getListOfUsers()) {
             String name = u.getFirstName()+" "+u.getLastName();
@@ -597,11 +597,11 @@ public class CarDealershipServiceTest {
         BigDecimal reportPrice = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
         for(Map<String,Object> inventoryRecord : service.getInventoryReport(true)) {
             inventorySize+=(long) inventoryRecord.get("Count");
-            totalInventoryPrice = totalInventoryPrice.add(BigDecimal.valueOf((Double) inventoryRecord.get("Stock Value")).setScale(2,RoundingMode.HALF_UP));
+            totalInventoryPrice = totalInventoryPrice.add((BigDecimal) inventoryRecord.get("Stock Value"));
         }
         for(Map<String,Object> inventoryRecord : service.getInventoryReport(false)) {
             inventorySize+=(long) inventoryRecord.get("Count");
-            totalInventoryPrice = totalInventoryPrice.add(BigDecimal.valueOf((Double) inventoryRecord.get("Stock Value")).setScale(2,RoundingMode.HALF_UP));
+            totalInventoryPrice = totalInventoryPrice.add((BigDecimal) inventoryRecord.get("Stock Value"));
         }
         assertEquals(inventorySize,currentInventory.size());
         assertTrue(totalInventoryPrice.equals(reportPrice));
