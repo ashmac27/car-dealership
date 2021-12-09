@@ -81,7 +81,7 @@ public class VehicleDAODatabaseTest {
         List<Vehicle> vehicleList = vehicleDAO.getVehicleList();
 
         // ASSERT
-        Assert.assertEquals(2, vehicleList.size());
+        Assert.assertEquals(4, vehicleList.size());
         Assert.assertTrue(vehicleList.contains(vehicle4));
         Assert.assertTrue(vehicleList.contains(vehicle1));
     }
@@ -131,7 +131,7 @@ public class VehicleDAODatabaseTest {
         List<Vehicle> vehicleList = vehicleDAO.getFeaturedVehicleList();
 
         // ASSERT
-        Assert.assertEquals(1, vehicleList.size());
+        Assert.assertEquals(2, vehicleList.size());
         Assert.assertTrue(vehicleList.contains(vehicle4));
         Assert.assertFalse(vehicleList.contains(vehicle1));
     }
@@ -184,7 +184,7 @@ public class VehicleDAODatabaseTest {
         List<Vehicle> vehicleList = vehicleDAO.getVehicleListBySearchCriteria(criteria);
 
         // ASSERT
-        Assert.assertEquals(1, vehicleList.size());
+        Assert.assertEquals(2, vehicleList.size());
         Assert.assertFalse(vehicleList.contains(vehicle4));
         Assert.assertTrue(vehicleList.contains(vehicle1));
     }
