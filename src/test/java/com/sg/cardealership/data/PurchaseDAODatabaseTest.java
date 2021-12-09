@@ -7,6 +7,7 @@ import com.sg.cardealership.model.Special;
 import com.sg.cardealership.model.User;
 import com.sg.cardealership.model.Vehicle;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -159,7 +160,7 @@ public class PurchaseDAODatabaseTest {
     public void updatePurchase() {
         List<Purchase> oldList = purchaseDAO.getAllPurchases();
         oldList.replaceAll(purchase -> {
-            purchase.setPurchasePrice(BigDecimal.valueOf((new Random()).nextDouble() * 1000).setScale(2));
+            purchase.setPurchasePrice(BigDecimal.valueOf((new Random()).nextDouble() * 1000).setScale(2, RoundingMode.HALF_UP));
             return purchase;
         });
         oldList.forEach(purchase -> {
