@@ -580,8 +580,8 @@ public class CarDealershipServiceTest {
         }
         for(User u : service.getListOfUsers()) {
             String name = u.getFirstName()+" "+u.getLastName();
-            assertTrue(numberSoldByUser.get(name).equals(0));
-            assertTrue(totalSoldByUser.get(name).equals(BigDecimal.ZERO));
+            assertTrue(numberSoldByUser.get(name).equals(0L));
+            assertTrue(totalSoldByUser.get(name).equals(new BigDecimal("0.00")));
         }
     }
     
@@ -589,19 +589,19 @@ public class CarDealershipServiceTest {
     @Sql(scripts = {"file:car_dealership_schema_creation.sql","file:car_dealership_test_data.sql"})
     public void inventoryReportTest() {
         List<Vehicle> currentInventory = vehicleDAO.getVehicleList().stream().filter(vehicle -> !vehicle.isSold()).collect(Collectors.toList());
-        BigDecimal totalInventoryPrice = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal totalInventoryPrice = new BigDecimal("0.00");
         for(Vehicle p : currentInventory) {
             totalInventoryPrice = totalInventoryPrice.add(p.getMsrp());
         }
         long inventorySize = 0;
-        BigDecimal reportPrice = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_UP);
+        BigDecimal reportPrice = new BigDecimal("0.00");
         for(Map<String,Object> inventoryRecord : service.getInventoryReport(true)) {
             inventorySize+=(long) inventoryRecord.get("Count");
-            totalInventoryPrice = totalInventoryPrice.add((BigDecimal) inventoryRecord.get("Stock Value"));
+            reportPrice = reportPrice.add((BigDecimal) inventoryRecord.get("Stock Value"));
         }
         for(Map<String,Object> inventoryRecord : service.getInventoryReport(false)) {
             inventorySize+=(long) inventoryRecord.get("Count");
-            totalInventoryPrice = totalInventoryPrice.add((BigDecimal) inventoryRecord.get("Stock Value"));
+            reportPrice = reportPrice.add((BigDecimal) inventoryRecord.get("Stock Value"));
         }
         assertEquals(inventorySize,currentInventory.size());
         assertTrue(totalInventoryPrice.equals(reportPrice));
